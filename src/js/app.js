@@ -1,7 +1,8 @@
 App = {
   web3Provider: null,
   myAccount: null,
-  contracts_address: "0xe6769a0049b7d3b0b9eb776c606d0bf16c4e17e4", //0xd1790491fc546debf76f8fb5f9b6145e1d02605d
+  contracts_address: "0x664decae427ba04b09a71253bfe73bd6c17fdfac", 
+  // contracts_address: "0x5f3b6a98a5ec4bd9d185b05a541bc7a3fcc55c6a", 
   initWeb3: function() {
     // Is there an injected web3 instance?
     if (typeof web3 !== 'undefined') {
@@ -12,6 +13,137 @@ App = {
     }
     web3 = new Web3(App.web3Provider);
     App.MyContract = web3.eth.contract([
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "name",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "price",
+            "type": "uint256"
+          }
+        ],
+        "name": "lower",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "add",
+            "type": "address"
+          }
+        ],
+        "name": "getAssetsInfo",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "auctionEnd",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "beneficiary",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "firstPrice",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "withdraw",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "numberOfUnits",
+            "type": "uint256"
+          }
+        ],
+        "name": "bid",
+        "outputs": [],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "assetsInfo",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
       {
         "constant": true,
         "inputs": [],
@@ -43,69 +175,12 @@ App = {
       {
         "constant": true,
         "inputs": [],
-        "name": "reversePrice",
-        "outputs": [
-          {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "name",
-        "outputs": [
-          {
-            "name": "",
-            "type": "bytes32"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "name": "assetsInfo",
-        "outputs": [
-          {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "units",
-        "outputs": [
-          {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
         "name": "getVariables",
         "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          },
           {
             "name": "",
             "type": "uint256"
@@ -153,13 +228,8 @@ App = {
       },
       {
         "constant": true,
-        "inputs": [
-          {
-            "name": "add",
-            "type": "address"
-          }
-        ],
-        "name": "getAssetsInfo",
+        "inputs": [],
+        "name": "units",
         "outputs": [
           {
             "name": "",
@@ -173,7 +243,7 @@ App = {
       {
         "constant": true,
         "inputs": [],
-        "name": "firstPrice",
+        "name": "currentPrice",
         "outputs": [
           {
             "name": "",
@@ -206,52 +276,11 @@ App = {
       {
         "constant": true,
         "inputs": [],
-        "name": "currentPrice",
+        "name": "reversePrice",
         "outputs": [
           {
             "name": "",
             "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "name": "winnerInfo",
-        "outputs": [
-          {
-            "name": "units",
-            "type": "uint256"
-          },
-          {
-            "name": "bid",
-            "type": "uint256"
-          },
-          {
-            "name": "change",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "beneficiary",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
           }
         ],
         "payable": false,
@@ -292,114 +321,30 @@ App = {
         "type": "function"
       },
       {
-        "anonymous": false,
+        "constant": true,
         "inputs": [
-          {
-            "indexed": false,
-            "name": "winners",
-            "type": "address[]"
-          }
-        ],
-        "name": "AuctionEnded",
-        "type": "event"
-      },
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "withdraw",
-        "outputs": [
           {
             "name": "",
-            "type": "bool"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "name": "HighestBidDecreased",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": true,
-            "name": "add",
             "type": "address"
           }
         ],
-        "name": "TestAddress",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
+        "name": "winnerInfo",
+        "outputs": [
           {
-            "indexed": true,
-            "name": "value",
+            "name": "units",
+            "type": "uint256"
+          },
+          {
+            "name": "bid",
+            "type": "uint256"
+          },
+          {
+            "name": "change",
             "type": "uint256"
           }
         ],
-        "name": "TestValue",
-        "type": "event"
-      },
-      {
-        "anonymous": false,
-        "inputs": [
-          {
-            "indexed": false,
-            "name": "winner",
-            "type": "address"
-          }
-        ],
-        "name": "UnitsDecreased",
-        "type": "event"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "price",
-            "type": "uint256"
-          }
-        ],
-        "name": "lower",
-        "outputs": [],
         "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "auctionEnd",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
-            "name": "numberOfUnits",
-            "type": "uint256"
-          }
-        ],
-        "name": "bid",
-        "outputs": [],
-        "payable": true,
-        "stateMutability": "payable",
+        "stateMutability": "view",
         "type": "function"
       },
       {
@@ -433,6 +378,66 @@ App = {
         "payable": true,
         "stateMutability": "payable",
         "type": "fallback"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "value",
+            "type": "uint256"
+          }
+        ],
+        "name": "TestValue",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "add",
+            "type": "address"
+          }
+        ],
+        "name": "TestAddress",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "HighestBidDecreased",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "winner",
+            "type": "address"
+          }
+        ],
+        "name": "UnitsDecreased",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "winners",
+            "type": "address[]"
+          }
+        ],
+        "name": "AuctionEnded",
+        "type": "event"
       }
     ]);
     return App.initContract();
@@ -446,7 +451,7 @@ App = {
         console.log(error);
       }  
       else {
-        var name = variables[7];
+        var name = variables[8];
         for (let i = name.length-1; i > -1; i--) {
           if (name[i] != '0') {
             name = name.substring(0, i+1);
@@ -456,15 +461,15 @@ App = {
         
         var variables = {
           'name': web3.toAscii(name),
-          'now': variables[0]['c'][0],
-          'endingTime': variables[1]['c'][0],
-          'firstPrice': variables[2]['c'][0],
-          'reversePrice': variables[3]['c'][0],
-          'totalGains': variables[4]['c'][0],
-          'unitsLeft': variables[5]['c'][0],
-          'currentPrice': variables[6]['c'][0],
-          'beneficiary': variables[8],
-          'winners': variables[9],
+          'now': variables[1]['c'][0],
+          'endingTime': variables[2]['c'][0],
+          'firstPrice': variables[3]['c'][0]/1000,
+          'reversePrice': variables[4]['c'][0]/1000,
+          'totalGains': variables[5]['c'][0],
+          'unitsLeft': variables[6]['c'][0],
+          'currentPrice': variables[7]['c'][0]/1000,
+          'beneficiary': variables[9],
+          'winners': variables[10],
         };
         console.log(variables);
 
@@ -489,6 +494,7 @@ App = {
           panel.find('.my-btn').text('BID');
           panel.find('input').attr("placeholder", "Number of units to bid");
           panel.find('.input-group-addon').text("Units");
+          panel.find('.alert').text("Only " + variables['unitsLeft'].toString() + " left!");
           App.bindEvents(1);
         }
       }
@@ -516,8 +522,8 @@ App = {
 
     var auctionInstance = App.MyContract.at(App.contracts_address);
     var panel = $(".panel-body");
-    var currentPrice = parseInt(panel.find('.currentPrice').text());
-    var nextPrice = parseInt(panel.find("input").val());
+    var currentPrice = parseFloat(panel.find('.currentPrice').text());
+    var nextPrice = parseFloat(panel.find("input").val());
 
     if (nextPrice >= currentPrice) {
       console.log("Oops!");
@@ -525,8 +531,8 @@ App = {
       $('.modal-btn').click();
     }
     else {
-      console.log("Changing value to " + nextPrice.toString());
-      auctionInstance.lower(nextPrice, function (error, result) {
+      console.log("Changing value to " + parseInt(nextPrice * 1000).toString());
+      auctionInstance.lower(parseInt(nextPrice * 1000), function (error, result) {
         if (!error)
         console.log(result);
       else
@@ -540,21 +546,28 @@ App = {
 
     var auctionInstance = App.MyContract.at(App.contracts_address);
     var panel = $('.panel-body');
-    var currentPrice = parseInt(panel.find('.currentPrice').text());
+    var currentPrice = parseFloat(panel.find('.currentPrice').text());
+    var unitsLeft = parseInt(panel.find('.unitsLeft').text());
     var units = parseInt(panel.find("input").val());
- 
-    console.log("Bidding with " + (web3.toWei(currentPrice * units, 'ether')).toString());
-    
-    auctionInstance.bid(web3.eth.currentPrice * units, {
-                                              gas: 300000,
-                                              from: App.myAccount,
-                            value: web3.toWei(currentPrice * units, 'ether')}, 
-                                              function (error, result) {
-    if (!error)
-      console.log(result)
-    else
-      console.log(error);
-    });
+
+    if (units > unitsLeft) {
+      console.log("Oops!");
+      $('.modal-btn').click();
+    }
+    else {
+      console.log("Bidding with " + (web3.toWei(currentPrice * units, 'ether')).toString());
+      
+      auctionInstance.bid(units, {
+                                  gas: 300000,
+                                  from: App.myAccount,
+                              value: web3.toWei(currentPrice * units, 'ether')}, 
+                                  function (error, result) {
+      if (!error)
+        console.log(result)
+      else
+        console.log(error);
+      });
+    }
   }
 
 };
