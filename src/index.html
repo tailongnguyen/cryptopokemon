@@ -42,12 +42,16 @@
             <img alt="object" height="100px" width="100px" data-src="holder.js/140x140" class="img-rounded img-center" src="http://marcvaneijk.com/images/2016-03-16/object.jpg"
             <br/><br/>
             <strong>Remaining Bidding Time</strong>: <span class="remainingTime">None</span><br/>
-            <strong>Current Price (wei)</strong>: <span class="currentPrice">None</span><br/> 
-            <strong>Reverse Price (wei)</strong>: <span class="reversePrice">None</span><br/> 
+            <strong>Current Price (ETH)</strong>: <span class="currentPrice">None</span><br/> 
+            <strong>Reverse Price (ETH)</strong>: <span class="reversePrice">None</span><br/> 
             <strong>Units Left</strong>: <span class="unitsLeft">None</span><br/>
             <strong>Winners</strong>: <span class="winners">None</span><br/>
-            <button class="btn btn-default my-btn" type="button" data-id="0">Bid!</button>
-            <input type="text">
+            <hr>
+            <div class="input-group">
+              <input id="msg" type="text" class="form-control" name="msg" placeholder="Additional Info">
+              <span class="input-group-addon">Text</span>
+            </div>
+            <button class="btn btn-block btn-default my-btn" style="display: block" type="button" data-id="0">Bid!</button>
             <button type="button" style="display: none" class="btn btn-info btn-lg modal-btn" data-toggle="modal" data-target="#myModal">Open Modal</button>
             <div class="modal fade" id="myModal" role="dialog">
               <div class="modal-dialog">

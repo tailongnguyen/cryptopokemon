@@ -56,8 +56,8 @@ contract Auction {
         reversePrice = _reversePrice;
     }
     
-    function getVariables () public view returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256, bytes32, address, address[]) {
-        return (now, endingTime, firstPrice, reversePrice, totalGains, units, currentPrice, name, beneficiary, winners);
+    function getVariables () public view returns (bool, uint256, uint256, uint256, uint256, uint256, uint256, uint256, bytes32, address, address[]) {
+        return (ended, now, endingTime, firstPrice, reversePrice, totalGains, units, currentPrice, name, beneficiary, winners);
     }
 
     function getWinnerInfo (address add) public view returns (WinningInfo) {

@@ -1,7 +1,7 @@
 App = {
   web3Provider: null,
   myAccount: null,
-  contracts: {},
+  contracts_address: "0xe6769a0049b7d3b0b9eb776c606d0bf16c4e17e4", //0xd1790491fc546debf76f8fb5f9b6145e1d02605d
   initWeb3: function() {
     // Is there an injected web3 instance?
     if (typeof web3 !== 'undefined') {
@@ -439,7 +439,7 @@ App = {
   },
 
   initContract: function() {
-    var auctionInstance = App.MyContract.at('0xd1790491fc546debf76f8fb5f9b6145e1d02605d');
+    var auctionInstance = App.MyContract.at(App.contracts_address);
     auctionInstance.getVariables.call(function(error, variables) {
       if (error) {
         console.log("Error initializing contract!");
@@ -475,22 +475,20 @@ App = {
         panel.find('.currentPrice').text(variables['currentPrice']);
         panel.find('.unitsLeft').text(variables['unitsLeft']);
         panel.find('.reversePrice').text(variables['reversePrice']);
-
-        web3.eth.getAccounts(function (error, accounts) {
-          if (error) {
-            console.log("Error loading accounts!");
-          }
-          else {
-            App.myAccount = accounts[0];
-          }
-        });
-        if (App.myAccount = variables['beneficiary']) {
-          panel.find('.my-btn').text('Lower!');
+        
+        App.myAccount = web3.eth.accounts[0];
+        if (App.myAccount == variables['beneficiary']) {
+          panel.find('.my-btn').text('LOWER');
+          panel.find('input').attr("placeholder", "New price");
+          panel.find('.input-group-addon').text("ETH");
           App.bindEvents(0);
         }
         else {
-          panel.find('my-btn').text('Bid!');
-          panel.find('input').css("display", "None");
+          console.log("Not owner!");
+          
+          panel.find('.my-btn').text('BID');
+          panel.find('input').attr("placeholder", "Number of units to bid");
+          panel.find('.input-group-addon').text("Units");
           App.bindEvents(1);
         }
       }
@@ -509,14 +507,14 @@ App = {
 
   markBidded: function() {
     console.log("Marking bidded!");
-    var auctionInstance = App.MyContract.at('0xd1790491fc546debf76f8fb5f9b6145e1d02605d');
+    var auctionInstance = App.MyContract.at(App.contracts_address);
 
   },
 
   handleLower: function(event) {
     event.preventDefault();
 
-    var auctionInstance = App.MyContract.at('0xd1790491fc546debf76f8fb5f9b6145e1d02605d');
+    var auctionInstance = App.MyContract.at(App.contracts_address);
     var panel = $(".panel-body");
     var currentPrice = parseInt(panel.find('.currentPrice').text());
     var nextPrice = parseInt(panel.find("input").val());
@@ -527,7 +525,7 @@ App = {
       $('.modal-btn').click();
     }
     else {
-      console.log("Chaning value to " + nextPrice.toString());
+      console.log("Changing value to " + nextPrice.toString());
       auctionInstance.lower(nextPrice, function (error, result) {
         if (!error)
         console.log(result);
@@ -540,11 +538,18 @@ App = {
   handleBid: function() {
     event.preventDefault();
 
-    var auctionInstance = App.MyContract.at('0xd1790491fc546debf76f8fb5f9b6145e1d02605d');
+    var auctionInstance = App.MyContract.at(App.contracts_address);
     var panel = $('.panel-body');
     var currentPrice = parseInt(panel.find('.currentPrice').text());
-
-    auctionInstance.bid(currentPrice, { from: App.myAccount }, function (error, result) {
+    var units = parseInt(panel.find("input").val());
+ 
+    console.log("Bidding with " + (web3.toWei(currentPrice * units, 'ether')).toString());
+    
+    auctionInstance.bid(web3.eth.currentPrice * units, {
+                                              gas: 300000,
+                                              from: App.myAccount,
+                            value: web3.toWei(currentPrice * units, 'ether')}, 
+                                              function (error, result) {
     if (!error)
       console.log(result)
     else
