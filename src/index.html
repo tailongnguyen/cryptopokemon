@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Simple Dutch Aution</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center">Simple Dutch Aution</h1>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+
+      <div id="object" class="row">
+        <!-- OBJECTs LOAD HERE -->
+      </div>
+    </div>
+
+    <div id="objectTemplate">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="panel panel-default panelObject">
+          <div class="panel-heading">
+            <h3 class="panel-title">Scrappy</h3>
+          </div>
+          <div class="panel-body">
+            <img alt="object" height="100px" width="100px" data-src="holder.js/140x140" class="img-rounded img-center" src="http://marcvaneijk.com/images/2016-03-16/object.jpg"
+            <br/><br/>
+            <strong>Remaining Bidding Time</strong>: <span class="remainingTime">None</span><br/>
+            <strong>Current Price (wei)</strong>: <span class="currentPrice">None</span><br/> 
+            <strong>Reverse Price (wei)</strong>: <span class="reversePrice">None</span><br/> 
+            <strong>Units Left</strong>: <span class="unitsLeft">None</span><br/>
+            <strong>Winners</strong>: <span class="winners">None</span><br/>
+            <button class="btn btn-default my-btn" type="button" data-id="0">Bid!</button>
+            <input type="text">
+            <button type="button" style="display: none" class="btn btn-info btn-lg modal-btn" data-toggle="modal" data-target="#myModal">Open Modal</button>
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">WARNING</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="alert alert-danger">
+                       You should set a <strong>lower</strong> price than the current one.
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
