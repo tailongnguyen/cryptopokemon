@@ -2,7 +2,8 @@ App = {
     web3Provider: null,
     myAccount: null,
     // contracts_address: "0xa87f262938420a8ac8d651bdfcf34ae36351210e",
-    contracts_address: "0x41ac36fb95236e776baa8c8e4cd7ee3e2f00344b",
+    // contracts_address: "0x41ac36fb95236e776baa8c8e4cd7ee3e2f00344b",
+    contracts_address: "0xe4c1f8b0b54831f36602dde3f82eee835ef0bb32",
     auctionInstance: null,
     initWeb3: function () {
         // Is there an injected web3 instance?
@@ -113,11 +114,16 @@ App = {
                     },
                     {
                         "indexed": false,
-                        "name": "amount",
-                        "type": "uint256"
+                        "name": "name",
+                        "type": "bytes32"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "beneficiary",
+                        "type": "address"
                     }
                 ],
-                "name": "PriceDecreased",
+                "name": "AuctionCreated",
                 "type": "event"
             },
             {
@@ -152,16 +158,11 @@ App = {
                     },
                     {
                         "indexed": false,
-                        "name": "name",
-                        "type": "bytes32"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "beneficiary",
-                        "type": "address"
+                        "name": "amount",
+                        "type": "uint256"
                     }
                 ],
-                "name": "AuctionCreated",
+                "name": "PriceDecreased",
                 "type": "event"
             },
             {
@@ -199,14 +200,14 @@ App = {
                 "type": "constructor"
             },
             {
-                "constant": false,
+                "constant": true,
                 "inputs": [
                     {
-                        "name": "idx",
-                        "type": "uint256"
+                        "name": "",
+                        "type": "bytes32"
                     }
                 ],
-                "name": "withdraw",
+                "name": "assetNames",
                 "outputs": [
                     {
                         "name": "",
@@ -214,7 +215,7 @@ App = {
                     }
                 ],
                 "payable": false,
-                "stateMutability": "nonpayable",
+                "stateMutability": "view",
                 "type": "function"
             },
             {
@@ -471,10 +472,6 @@ App = {
                     {
                         "name": "",
                         "type": "uint256"
-                    },
-                    {
-                        "name": "",
-                        "type": "uint256"
                     }
                 ],
                 "payable": false,
@@ -563,7 +560,7 @@ App = {
                             }
                             // var remainingTime = Math.max(0, parseInt(results[2]['c'][0] - results[1]['c'][0]));
                             var endingTime = parseInt(results[2]['c'][0]);
-                            console.log(endingTime);
+                            
                             var x = setInterval(function () {
                                 var now = parseInt(new Date().getTime()/1000);
                                 var remainingTime = endingTime - now;
@@ -588,9 +585,9 @@ App = {
                         
                         if (!error) {
                             console.log(results);
-                            $(".object_" + i.toString()).find(".firstPrice").text(results[0]['c'][0]  / 1e6);
-                            $(".object_" + i.toString()).find(".reversePrice").text(results[1]['c'][0]  / 1e6);
-                            $(".object_" + i.toString()).find(".currentPrice").text(results[2]['c'][0]  / 1e6);
+                            $(".object_" + i.toString()).find(".firstPrice").text(results[0]['c'][0].toString()[0] * (10 ** results[0]['e']/ 1e18));
+                            $(".object_" + i.toString()).find(".reversePrice").text(results[1]['c'][0].toString()[0] * (10 ** results[1]['e']/ 1e18));
+                            $(".object_" + i.toString()).find(".currentPrice").text(results[2]['c'][0].toString()[0] * (10 ** results[2]['e']/ 1e18));
                         }
                         else {
                             console.log(error);
@@ -656,11 +653,11 @@ App = {
             else{
                 App.auctionInstance.creationFee.call(function (error, result) {
                     if (!error){
-                        App.auctionInstance.createAuction(name, parseInt(time), parseInt(units), parseInt(fp * 1e6), parseInt(rp * 1e6), 
+                        App.auctionInstance.createAuction(name, parseInt(time), parseInt(units), parseInt(web3.toWei(fp, 'ether')), parseInt(web3.toWei(rp, 'ether')), 
                                                     {
                                                         gas: 300000,
                                                         from: App.myAccount,
-                                                        value: web3.toWei(result / 1e18, 'ether')
+                                                        value: result,
                                                     }, function (err, res) {
                                                         if (!err)
                                                             console.log(res);
@@ -674,6 +671,32 @@ App = {
                     }
                 });
                 $("#myModalForm").find('.dismiss-form').click();
+            }
+        })
+        $(".asset-btn").click(function () {
+            var name = $(".asset-input").val();
+            if (name == "") {
+                window.createNotification({
+                    closeOnClick: true,
+                    displayCloseButton: false,
+                    positionClass: 'nfc-top-right',
+                    showDuration: 10000,
+                    theme: 'warning'
+                })({
+                    title: "Warning",
+                    message: "You should specify what you are looking for, dumbass!"
+                });
+            }
+            else{
+                App.auctionInstance.getAssetsInfo.call(App.myAccount, name, function (error, result) {
+                    if (!error){
+                        $(".asset-count").text("Number :" + result);
+                    }
+                    else{
+                        console.log(error);
+                        
+                    }
+                })
             }
         })
         return App.eventWatch();
@@ -697,9 +720,9 @@ App = {
                     theme: 'info'
                 })({
                     title: "Notification",
-                    message: "Price of auction " + result.args.idx + "th has been lowered to " + result.args.amount / 1e6
+                    message: "Price of auction " + result.args.idx + "th has been lowered to " + result.args.amount / 1e18
                 });
-                $(".object_" + result.args.idx.toString()).find(".currentPrice").text(result.args.amount / 1e6);
+                $(".object_" + result.args.idx.toString()).find(".currentPrice").text(result.args.amount / 1e18);
                 $(".object_" + result.args.idx.toString()).find('.my-btn').find("svg").remove();
             }
             else {
@@ -753,8 +776,14 @@ App = {
                     title: "Notification",
                     message: "Auction number " + result.args.idx + " has been closed"
                 });
-                $(".object_" + result.args.idx.toString()).find(".w3-badge").text("Closed");
-                $(".object_" + result.args.idx.toString()).find(".w3-badge").attr("class", "w3-badge w3-red");
+                if ($(".object_" + result.args.idx.toString()).find(".beneficiary").text() != App.myAccount){
+                    $(".object_" + result.args.idx.toString()).find(".w3-badge").text("Closed");
+                    $(".object_" + result.args.idx.toString()).find(".w3-badge").attr("class", "w3-badge w3-red");
+                }
+                else{
+                    $(".object_" + result.args.idx.toString()).find(".close-btn").text("Closed");
+                    $(".object_" + result.args.idx.toString()).find(".close-btn").attr("class", "w3-badge w3-red");
+                }
                 $(".object_" + result.args.idx.toString()).find('.my-btn').attr("disabled", true);
             }
             else {
@@ -791,7 +820,7 @@ App = {
             if (!error){
                 if (App.myAccount == result[0] && !result[8]) {
                     var btn = $(".object_" + idx.toString()).find(".w3-badge");
-                    btn.attr("class", "btn btn-danger");
+                    btn.attr("class", "close-btn btn btn-danger");
                     btn.text("Close");
                     btn.click({"idx": idx}, App.handleClose);
                 }
@@ -838,7 +867,7 @@ App = {
         else {
             console.log("Changing value to " + parseInt(nextPrice).toString());
             object_template.find('.my-btn').append("<i class='fa fa-spinner fa-spin'></i>");
-            App.auctionInstance.lower(event.data['idx'], parseInt(nextPrice * 1e6), function (error, result) {
+            App.auctionInstance.lower(event.data['idx'], parseInt(web3.toWei(nextPrice, 'ether')), function (error, result) {
                 if (!error)
                     console.log(result);
                 else

@@ -7,7 +7,6 @@ contract Ethauction {
     struct WinningInfo {
         uint256 units;
         uint256 bid;
-        uint256 change;
     }
 
     struct Auction {
@@ -25,9 +24,10 @@ contract Ethauction {
         mapping (address => WinningInfo)    winnerInfo;
     }
 
-    uint256 public creationFee;
-    mapping (bytes32 => uint256) public auctionNames;
     Auction[] public auctions;
+    uint256 public creationFee;
+    mapping (bytes32 => bool) public assetNames;
+    mapping (bytes32 => uint256) public auctionNames;
 
     modifier onlyBefore(uint _time) {require(now < _time); _;}
     modifier onlyAfter(uint _time) {require(now > _time); _;}
@@ -56,7 +56,7 @@ contract Ethauction {
         require(_biddingTime > 0);
         require(_firstPrice > _reversePrice);
         require(_units > 0);
-
+        require(!assetNames[_name]);
         Auction memory newAuction;
         newAuction.assetName = _name;
         newAuction.endingTime = now + _biddingTime;
@@ -68,6 +68,7 @@ contract Ethauction {
         auctions.push(newAuction);
         auctions[auctions.length - 1].assetsInfo[msg.sender] = _units;
         auctionNames[_name] = auctions.length - 1;
+        assetNames[_name] = true;
         AuctionCreated(auctions.length - 1, _name, msg.sender);
     }
     
@@ -99,13 +100,16 @@ contract Ethauction {
             auctions[idx].winners);
     }
 
-    function getWinnerInfo(address add, bytes32 name) public view returns (uint256, uint256, uint256){
+    function getWinnerInfo(address add, bytes32 name) public view returns (uint256, uint256){
         uint256 idx = auctionNames[name];
         WinningInfo inf = auctions[idx].winnerInfo[add];
-        return (inf.units, inf.bid, inf.change);
+        return (inf.units, inf.bid);
     }
 
     function getAssetsInfo (address add, bytes32 name) public view returns (uint256) {
+        if (!assetNames[name]){
+            return 0;
+        }
         uint256 idx = auctionNames[name];
         return auctions[idx].assetsInfo[add];
     }
@@ -120,15 +124,16 @@ contract Ethauction {
         require(msg.value >= auctions[idx].currentPrice * numberOfUnits);
 
         auctions[idx].winners.push(msg.sender);
+
         auctions[idx].winnerInfo[msg.sender].units = numberOfUnits;
         auctions[idx].winnerInfo[msg.sender].bid = auctions[idx].currentPrice;
-        auctions[idx].winnerInfo[msg.sender].change += msg.value - (auctions[idx].currentPrice * numberOfUnits);
+
+        auctions[idx].assetsInfo[msg.sender] += numberOfUnits;
+        auctions[idx].assetsInfo[auctions[idx].beneficiary] -= numberOfUnits;
+
         auctions[idx].units -= numberOfUnits;
         auctions[idx].totalGains += auctions[idx].currentPrice * numberOfUnits;
         UnitsDecreased(idx, auctions[idx].units, msg.sender);
-        if (auctions[idx].units == 0) {
-            auctionEnd(idx);
-        }
     }
 
     /// Lower the current price. 
@@ -144,29 +149,10 @@ contract Ethauction {
         PriceDecreased(idx, auctions[idx].currentPrice);
     }
 
-    /// Withdraw a bid that was overbid.
-    function withdraw(uint256 idx) public returns (bool) {
-        uint amount = auctions[idx].winnerInfo[msg.sender].change;
-        if (amount > 0) {
-            // It is important to set this to zero because the recipient
-            // can call this function again as part of the receiving call
-            // before `send` returns.
-            auctions[idx].winnerInfo[msg.sender].change = 0;
-
-            msg.sender.transfer(amount);
-        }
-        return true;
-    }
-
     /// End the auction and send the bid to the beneficiary
     function auctionEnd(uint256 idx) public onlyAfter(auctions[idx].endingTime) {
         require(!auctions[idx].ended);
         auctions[idx].ended = true;
-        for (uint256 i = 0; i < auctions[idx].winners.length; i++) {
-            address bidderAddress = auctions[idx].winners[i];
-            auctions[idx].assetsInfo[bidderAddress] += auctions[idx].winnerInfo[bidderAddress].units;
-            auctions[idx].assetsInfo[auctions[idx].beneficiary] -= auctions[idx].winnerInfo[bidderAddress].units;
-        }
         auctions[idx].beneficiary.transfer(auctions[idx].totalGains);
         AuctionEnded(idx, auctions[idx].beneficiary, auctions[idx].assetName, auctions[idx].winners);
     }
