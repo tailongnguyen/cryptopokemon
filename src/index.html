@@ -13,11 +13,8 @@
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="Notifications-master/dist/notifications.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="Notifications-master/dist/notifications.js"></script>
-    <script src="js/bignumber.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
         crossorigin="anonymous"></script>
 
@@ -35,16 +32,20 @@
         <div class="row">
             <div class="col-xs-12 col-sm-8 col-sm-push-2">
                 <h1 class="text-center">ETHAUCTION</h1>
-                <h4 class="text-center">
-                    <button type="button" class="btn btn-outline-primary asset-btn">Get</button>
-                    <input type="text" class="asset-input"> 
-                    <p class="asset-count"></p>
-                </h4>
                 <hr/>
                 <br/>
             </div>
         </div>
-
+		<!-- doan HTML de tao khung search -->
+		<div class="row form-group m-b-5">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search for..." id="txtSearch">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" id="btnSearch">Go!</button>
+				</span>
+			</div>
+		</div>
+		
         <div id="objects-row" class="row">
             <!-- OBJECTs LOAD HERE -->
         </div>
@@ -52,10 +53,10 @@
     
     <div class="holder">
         <div id="objectTemplate" style="display: none;">
-            <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="col-sm-1 col-md-4 col-lg-4">
                 <div class="panel panel-default panelObject">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Scrappy</h3>
+                        <strong class="panel-title">Scrappy</strong>
                         <span class="w3-badge" style="float: right;"></span>
                     </div>
                     <div class="panel-body" style="word-break: break-all;">
@@ -81,14 +82,14 @@
                         <a href="#" class="winners-tooltip" data-toggle="tooltip" title="Hooray!"><span class="badge winner-badge"></span></a>
                         <br/>
                         <hr>
-                        <div class="input-group">
-                            <input id="msg" type="text" class="form-control" name="msg" placeholder="Additional Info">
-                            <span class="input-group-addon"></span>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input id="msg" type="text" class="form-control" name="msg" placeholder="Additional Info">
+                                <span class="input-group-addon"></span>
+                            </div>
+                            <button class="btn btn-block btn-success my-btn" style="display: block; margin-top:5px" type="button" data-id="0"></button>
                         </div>
-                        <button class="btn btn-block btn-default my-btn" style="display: block" type="button" data-id="0">
-                            
-                        </button>
-
+                        
                         <button type="button" style="display: none" class="btn btn-info btn-lg modal-btn" data-toggle="modal" data-target="#myModal">Open Modal</button>
                         <div class="modal fade" id="myModal" role="dialog">
                             <div class="modal-dialog">
@@ -185,11 +186,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/web3.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-    </script>
     <script src="js/app.js"></script>
 </body>
 

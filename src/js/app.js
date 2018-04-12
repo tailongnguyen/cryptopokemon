@@ -538,7 +538,7 @@ App = {
                 for (let i = 0; i < count; i++) {
                     var object_template = $('.holder').clone(); 
                     object_template.find('#objectTemplate').attr("class", "object_" + i.toString());
-                    object_template.find('#objectTemplate').attr("style", "display: block;");
+                    object_template.find('#objectTemplate').attr("style", "display: inline;");
                     object_template.find('.my-btn').attr("id", "my-btn_" + i.toString());
                     row.append(object_template.clone().html());
                 }
@@ -911,4 +911,18 @@ $(function () {
     $(window).load(function () {
         App.initWeb3();
     });
+});
+
+// phan tinh nang search. Tim tat cac cac objectTemplate duoc dung. Cai nao phu hop voi search thi dung display:block. Cai nao ko phu hop search thi dung display:none de hidden.
+$("#btnSearch").click(function(){
+	var txtSearch = document.getElementById("txtSearch").value;
+    var parent = document.getElementById("objects-row");
+	var children = parent.children;
+	for(let i=0; i<children.length; i++) {
+		var child = children[i];
+		child.style="display:block";
+		var header = child.children[0].children[0].children[0].children[0].innerHTML;
+		if (header.indexOf(txtSearch) == -1)
+			child.style="display:none";
+	}
 });
