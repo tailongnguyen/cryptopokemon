@@ -5,14 +5,14 @@ import "./pokemonhelper.sol";
 contract PokemonAttack is PokemonHelper {
     
     uint randNonce = 0;
-    event PokemonBattle(uint _id1, uint _id2, uint8[] turns);
+    event PokemonBattle(uint _id1, uint _id2, uint32[] turns);
     
     function randMod(uint _modulus) internal returns(uint) {
         randNonce++;
         return uint(keccak256(now, msg.sender, randNonce)) % _modulus;
     }
 
-    function sub(uint8 a, uint8 b) internal pure returns (uint8){
+    function sub(uint32 a, uint32 b) internal pure returns (uint32){
         if (a >= b) {
             return a - b;
         }
@@ -35,11 +35,11 @@ contract PokemonAttack is PokemonHelper {
         Pokemon storage enemyPokemon = pokemons[_targetId];
         uint rand;
         uint32 outlevel;
-        uint8 my_damage;
-        uint8 enemy_damage;
-        uint8 my_hp = myPokemon.stats.hp;
-        uint8 enemy_hp = enemyPokemon.stats.hp;
-        uint8[] memory turns = new uint8[](50);
+        uint32 my_damage;
+        uint32 enemy_damage;
+        uint32 my_hp = myPokemon.stats.hp;
+        uint32 enemy_hp = enemyPokemon.stats.hp;
+        uint32[] memory turns = new uint32[](50);
         uint counter = 0;
 
         outlevel = abs(myPokemon.level, enemyPokemon.level);

@@ -6,12 +6,24 @@ contract PokemonHelper is PokemonFeeding {
 
     uint levelUpFee = 0.001 ether;
     event PokemonLevelUp(uint _pokemonId, uint32 _level);
-
+    event PokemonEvolve(uint _pokemonId);
+    
     modifier aboveLevel(uint _level, uint _pokemonId) {
         require(pokemons[_pokemonId].level >= _level);
         _;
     }
-
+    
+    function _isEvovalble(uint _pokemonId) internal view returns(bool){
+        Pokemon memory myPokemon = pokemons[_pokemonId];
+        uint threshold = evolution[myPokemon.primitiveId];
+        if (threshold > 0 && myPokemon.level >= threshold) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     function withdraw() external onlyOwner {
         owner.transfer(this.balance);
     }
@@ -25,32 +37,12 @@ contract PokemonHelper is PokemonFeeding {
         Pokemon storage myPokemon = pokemons[_pokemonId];
         _levelUp(_pokemonId);
         
-        bytes32 temp = myPokemon.nature;
+        BaseStats memory stats = natures[myPokemon.nature];
 
-        if (temp == natures[0]) {
-            myPokemon.stats.attack += 2;
-        }
-        else {
-            myPokemon.stats.attack += 1;
-        }
-        if (temp == natures[1]) {
-            myPokemon.stats.defense += 2;
-        }
-        else {
-            myPokemon.stats.defense ++;
-        }
-        if (temp == natures[2]){
-            myPokemon.stats.speed += 2;
-        }
-        else {
-            myPokemon.stats.speed ++;
-        }
-        if (temp == natures[3]) {
-            myPokemon.stats.hp += 4;
-        }
-        else {
-            myPokemon.stats.hp += 2;
-        }
+        myPokemon.stats.attack += stats.attack;
+        myPokemon.stats.defense += stats.defense;
+        myPokemon.stats.speed += stats.speed;
+        myPokemon.stats.hp += stats.hp;
     }
 
     function _levelUp(uint _pokemonId) internal {
@@ -59,16 +51,27 @@ contract PokemonHelper is PokemonFeeding {
         myPokemon.exp = 0;
         PokemonLevelUp(_pokemonId, myPokemon.level);
     }
+    
+    function evolve(uint _pokemonId) external onlyOwnerOf(_pokemonId) {
+        Pokemon storage myPokemon = pokemons[_pokemonId];
+        require(_isEvovalble(_pokemonId));
+        myPokemon.primitiveId += 1;
+        myPokemon.stats.attack += 15;
+        myPokemon.stats.defense += 15;
+        myPokemon.stats.speed += 15;
+        myPokemon.stats.hp += 15;
+        PokemonEvolve(_pokemonId);
+    }
 
     function changeNickName(uint _pokemonId, string _newNickName) external aboveLevel(2, _pokemonId) onlyOwnerOf(_pokemonId) {
         pokemons[_pokemonId].nickName = _newNickName;
     }
 
-    function addPrimitive(string _name, uint8 _attack, uint8 _defense, uint8 _speed, uint8 _hp) external onlyOwner {
-        primitives.push(PrimitivePokemon(_name, BaseStats(_attack, _defense, _speed, _hp)));
+    function addPrimitive(string _name, uint _catchRate, uint32 _attack, uint8 _defense, uint8 _speed, uint8 _hp) external onlyOwner {
+        primitives.push(PrimitivePokemon(_name, _catchRate, BaseStats(_attack, _defense, _speed, _hp)));
     }
 
-    function addFood(string _name, uint price, uint8 _attack, uint8 _defense, uint8 _speed, uint8 _hp) external onlyOwner {
+    function addFood(string _name, uint price, uint32 _attack, uint32 _defense, uint32 _speed, uint32 _hp) external onlyOwner {
         name2food[_name] = Food(price,_attack, _defense, _speed, _hp);
     }
 

@@ -1,7 +1,7 @@
 App = {
     web3Provider: null,
     myAccount: null,
-    contract_address: "0x1b0854594edfa67b046290631224da71abb2d734",
+    contract_address: "0x8cdaf0cd259887258bc13a92c0a6da92698644c0",
     contractInstance: null,
     initWeb3: function () {
         // Is there an injected web3 instance?

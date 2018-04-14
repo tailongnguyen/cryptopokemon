@@ -1,9 +1,9 @@
 pragma solidity ^0.4.19;
 
-import "./pokemonattack.sol";
+import "./pokemoncapture.sol";
 import "./erc721.sol";
 
-contract PokemonOwnership is PokemonAttack, ERC721 {
+contract PokemonOwnership is PokemonCapture, ERC721 {
 
     mapping (uint => address) pokemonApprovals;
 
