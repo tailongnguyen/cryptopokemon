@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-image">
+        <div class="row starter-row">
+            <div class="hero-object col-lg-3 col-sm-6 wild_0">
+                <div class="thumbnail">
+                    <img src="" alt="Avatar" style="height: 300px; width: 300px;">                
+                    <div class="overlay">
+                        <div class="text">Hello World</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-object col-lg-3 col-sm-6 wild_1">
+                <div class="thumbnail">
+                    <img src="" alt="Avatar" style="height: 300px; width: 300px;">                
+                    <div class="overlay">
+                        <div class="text">Hello World</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-object col-lg-3 col-sm-6 wild_2">
+                <div class="thumbnail">
+                    <img src="" alt="Avatar" style="height: 300px; width: 300px;">                
+                    <div class="overlay">
+                        <div class="text">Hello World</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-object col-lg-3 col-sm-6 wild_3">
+                <div class="thumbnail">
+                    <img src="" alt="Avatar" style="height: 300px; width: 300px;">                
+                    <div class="overlay">
+                        <div class="text">Hello World</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-text" style="margin-top: 20%;">
+            <h1 style="font-size:100px;">Choose One</h1>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'js/explore.js' %}"></script>
+{% endblock js %}

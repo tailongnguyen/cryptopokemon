@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+    <div class="pokemonList row">
+        <div class="pokemonHolder" style="display: none;">
+            <div class="card" style="width: 18rem; margin: 20px 20px 20px 20px">
+                <img class="card-img-top" src = "" alt="Card image cap" style="width: 100px; height: 100px;">
+                <div class="card-body">
+                    <strong><h5 class="card-title">Card title</h5></strong>
+                    <p class="card-text">This is to describe your pokemon, including information about appearance, habit, fun facts, ..v..v.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <table class="stats-table">
+                    <tr>
+                        <th>Level</th>
+                        <td class="level"></td>
+                    </tr>
+                    <tr>
+                        <th>Nature</th>
+                        <td class="nature"></td>
+                    </tr>
+                    <tr>
+                        <th>Level</th>
+                        <td class="attack"></td>
+                    </tr>
+                    <tr>
+                        <th>Nature</th>
+                        <td class="defense"></td>
+                    </tr>
+                    <tr>
+                        <th>Level</th>
+                        <td class="speed"></td>
+                    </tr>
+                    <tr>
+                        <th>Nature</th>
+                        <td class="hp"></td>
+                    </tr>
+                    </table>
+                </ul>
+                <tbody>
+                    
+                </tbody>
+                <div class="card-body pokemonDescription">
+                    <a href="#" class="card-link">More details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+
+{% endblock content%}
+
+{% block js %}
+<script src="{% static 'js/myteam.js' %}"></script>
+{% endblock js %}

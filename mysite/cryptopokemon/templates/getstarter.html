@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-image">
+        <div class="row starter-row">
+            <div class="col-lg-1" style="margin-left: 50px"></div>
+            <div class="hero-object col-lg-3 col-sm-6 bulbasaur">
+                <div class="thumbnail">
+                    <img src="https://vignette.wikia.nocookie.net/leonhartimvu/images/d/d3/001_Bulbasaur_DW.png/revision/latest?cb=20131106174201" alt="Avatar" style="height: 300px; width: 300px;">                
+                    <div class="overlay overlay-green">
+                        <div class="text"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-object col-lg-3 col-sm-6 squirtle">
+                <div class="thumbnail">
+                    <img src="https://vignette.wikia.nocookie.net/pokemonfakemon/images/e/ec/Squirtle_Dream.png/revision/latest?cb=20110530041702" alt="Avatar" style="height: 300px; width: 300px;">                
+                    <div class="overlay">
+                        <div class="text"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-object col-lg-3 col-sm-6 charmander">
+                <div class="thumbnail">
+                    <img src="https://vignette.wikia.nocookie.net/pokemon/images/5/55/004Charmander_OS_anime_3.png/revision/latest?cb=20150330015131" alt="Avatar" style="height: 300px; width: 300px;">                
+                    <div class="overlay overlay-red">
+                        <div class="text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-text" style="margin-top: 10%;">
+            <h1 style="font-size:100px;">Choose One</h1>
+        </div>
+
+    </div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static 'js/getstarter.js' %}"></script>
+{% endblock js %}

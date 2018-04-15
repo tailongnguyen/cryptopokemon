@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="hero-image">
+        <!-- <img src="https://img00.deviantart.net/05d9/i/2015/239/f/4/pokemon_energy_rainbow_wallpaper_by_violentspatula-d97dngh.png" alt=""> -->
+        <div class="hero-text">
+            <h1 style="font-size:100px;">CryptoPokemon</h1>
+            <h2>Level up, evolution, battle, capture, auction.</h2>
+            <a class="btn btn-success" href="{% url 'cryptopokemon:get starter' %}">Get Started</a>
+        </div>
+    </div>
+
+{% endblock content %}

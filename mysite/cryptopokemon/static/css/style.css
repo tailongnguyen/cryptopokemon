@@ -1,0 +1,171 @@
+/* @media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+} */
+
+.team-image {
+  -webkit-border-radius: 99em;
+  -moz-border-radius: 99em;
+  border-radius: 99em;
+  box-shadow: 0 5px 2px rgba(0, 0, 0, 0.3); 
+}
+
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:rgb(97, 101, 224);
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:8px;
+}
+
+/* Add a right margin to each icon */
+.fa {
+	display: inline;
+    margin-left: -30px;
+    margin-right: 8px;
+}
+
+.container {
+  position: relative;
+  margin-top:100px; 
+  padding-bottom: 50px;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 22.5px;
+  right: 0;
+  height: 300px;
+  width: 300px;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.overlay-red {
+  background-color: rgb(194, 35, 35);
+}
+.overlay-green {
+  background-color: rgb(31, 180, 39);
+}
+
+.thumbnail:hover .overlay {
+  opacity: 0.8;
+}
+
+.thumbnail .text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.hero-image {
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+  url("/media/bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 800px;
+}
+
+.hero-text {
+  text-align: center;
+  position: absolute;
+  font-family: 'Lobster', cursive;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.hero-object {
+  text-align: center;
+  position: relative;
+  margin-top: 10%;
+  color: white;
+}
+
+.hero-text a {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 10px 25px;
+  color: black;
+  background-color: #ddd;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hero-text button:hover {
+  background-color: #555;
+  color: white;
+}
+
+footer {
+   position: relative;
+   left:0px;
+   bottom:0px;
+   height:30px;
+   width:100%;
+   background:#999;
+}
+
+.stats-table {
+  border-collapse: collapse;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.stats-table td, #stats-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.stats-table tr:nth-child(even){background-color: #f2f2f2;}
+
+.stats-table tr:hover {background-color: #ddd;}
+
+.stats-table th {
+    border: 1px solid #ddd;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+}
+
+.card-img-top{
+  margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
