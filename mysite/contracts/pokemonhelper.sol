@@ -70,6 +70,11 @@ contract PokemonHelper is PokemonFeeding {
     function addPrimitive(string _name, uint _catchRate, uint32 _attack, uint8 _defense, uint8 _speed, uint8 _hp) external onlyOwner {
         primitives.push(PrimitivePokemon(_name, _catchRate, BaseStats(_attack, _defense, _speed, _hp)));
     }
+    
+    function setEvolution(uint _primitive1, uint _primitive2) external onlyOwner {
+        require(_primitive1 < primitives.length && _primitive2 < primitives.length);
+        evolution[_primitive1] = _primitive2;
+    }
 
     function addFood(string _name, uint price, uint32 _attack, uint32 _defense, uint32 _speed, uint32 _hp) external onlyOwner {
         name2food[_name] = Food(price,_attack, _defense, _speed, _hp);

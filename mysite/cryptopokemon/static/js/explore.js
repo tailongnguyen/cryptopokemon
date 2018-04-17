@@ -33,58 +33,43 @@ $(document).ready(function name(params) {
         }
     })
 
-    for (let i = 0; i < 4; i++) {
-        App.contractInstance.wildPokemons.call(i, function (error, result) {
-            if (!error){
-                var primitiveId = result[0];
-                var level = result[1];
-                var fledded = result[2];
-                var capturable = result[3];
-                if (!capturable){
-                    $(".wild_" + i).find('.text').text("Captured!");
-                }
-                else{
-                    $(".wild_" + i).find('.text').text("Level " + level);
-                }
-                App.contractInstance.getPrimitive.call(primitiveId, function (error, res) {
-                    if (!error){
-                        $(".wild_" + i).find('img').attr('src', "https://img.pokemondb.net/artwork/" + res[0] + ".jpg");
-                    }
-                    else{
-                        console.log(error);
-                    
-                    }
-                })
-            }
-        })
-        
-    }
-
     $(".hero-object").on("click", function () {
-        var id = $(this).attr('class').split(" ")[3].split('_')[1];
-        App.contractInstance.capturePokemon(parseInt(id), function (error, captured) {
+        var id = $(this).attr('class').split(" ")[1].split('_')[1];
+        console.log($(this).attr('class'));
+        console.log(id);
+        
+        App.contractInstance.capturePokemon(parseInt(id), {
+            gas: 400000,
+            from: App.myAccount,
+            value: web3.toWei(0, 'ether')
+        }, function (error, captured) {
             if (!error) {
                 console.log("Captured: " + captured);
-                
-                if (captured){
-                    var newPokemonEvent = App.contractInstance.NewPokemon();
-    
-                    newPokemonEvent.watch(function (error, result) {
-                        if (!error) {
-                            console.log("New pokemon: " + result.args.pokemonId + " " + result.args.name + " " + result.args.dna);
-                            alert("You have successfully capture a pokemon!");
-                            $(".wild_" + id).find('.text').text("Captured!");
-                        }
-                        else {
-                            console.log(error);
-    
-                        }
-                    });
-                }
-                else{
-                    alert("Grr! It breaks the ball!");
-                }
+                var pokemonCaptureFailEvent = App.contractInstance.PokemonCaptureFail();
+                pokemonCaptureFailEvent.watch((error1, result1) => {
+                    if (!error1) {
+                        alert("Grr! It breaks the ball!");
+                        console.log(result1);
+                        
+                    }
+                    else {
+                        console.log(error);
 
+                    }
+                })
+                var pokemonCapturedEvent = App.contractInstance.PokemonCaptured();
+
+                pokemonCapturedEvent.watch((error2, result2) => {
+                    if (!error2) {
+                        console.log(result2);
+                        alert("You have successfully capture a pokemon!");
+                        $(".wild_" + id).find('.text').text("Captured!");
+                    }
+                    else {
+                        console.log(error);
+
+                    }
+                });
             }
             else {
                 console.log(error);
@@ -92,4 +77,31 @@ $(document).ready(function name(params) {
             }
         })
     })
+    for (let i = 0; i < 4; i++) {
+        App.contractInstance.wildPokemons.call(i, function (error, result) {
+            if (!error) {
+                console.log(result);
+
+                var primitiveId = result[0];
+                var level = result[1];
+                var capturable = result[2];
+                if (!capturable) {
+                    $(".wild_" + i).find('.text').text("Captured!");
+                }
+                else {
+                    $(".wild_" + i).find('.text').text("Level " + level);
+                }
+                App.contractInstance.getPrimitive.call(primitiveId, function (error, res) {
+                    if (!error) {
+                        $(".wild_" + i).find('img').attr('src', "https://img.pokemondb.net/artwork/" + res[0] + ".jpg");
+                    }
+                    else {
+                        console.log(error);
+
+                    }
+                })
+            }
+        })
+
+    }
 })

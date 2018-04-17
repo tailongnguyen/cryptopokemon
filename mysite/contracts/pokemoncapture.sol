@@ -4,10 +4,12 @@ import "./pokemonattack.sol";
 
 contract PokemonCapture is PokemonAttack {
     
-    uint captureTime = 1 days;
+    uint captureTime = 1 hours;
     uint public countDownTime;
     
     event PokemonCaptured(uint _pokemonId, address owner);
+    event PokemonCaptureFail(uint _pokemonId, address owner);
+    
     function PokemonCapture() public {
         countDownTime = now;
     }
@@ -15,20 +17,20 @@ contract PokemonCapture is PokemonAttack {
     function callWildPokemon() external onlyOwner {
         require(uint(now) > countDownTime);
         for(uint i = 0; i < 4; i++){
-            wildPokemons[i] = WildPokemon(randMod(primitives.length), uint32(randMod(50)), now + captureTime, true);    
+            wildPokemons[i] = WildPokemon(randMod(primitives.length), uint32(randMod(50)), true);    
         }
     
         countDownTime = now + captureTime;
     }
 
-    function capturePokemon(uint _wildPokemonId) external payable returns(bool){
-        uint rand = randMod(200);
+    function capturePokemon(uint _wildPokemonId) external returns(bool _captured){
+        uint rand = randMod(463);
 
         WildPokemon storage pokemon = wildPokemons[_wildPokemonId];
-        require(now < pokemon.fledded);
+        require(now < countDownTime);
         require(pokemon.capturable);
         
-        if (rand > primitives[pokemon.primitiveId].catchRate + uint(pokemon.level)) {
+        if (rand > primitives[pokemon.primitiveId].catchRate + uint(pokemon.level) * 4) {
             // yay, caught it
             uint32 dna = _generateRandomDna(name);
             uint id = _createPokemon(name, dna, pokemon.primitiveId);
@@ -43,10 +45,11 @@ contract PokemonCapture is PokemonAttack {
             
             PokemonCaptured(id, msg.sender);
             pokemon.capturable = false;
-            return true;
+            _captured = true;
         }
         else {
-            return false;
+            PokemonCaptureFail(_wildPokemonId, msg.sender);
+            _captured = false;
         }
     }
 }

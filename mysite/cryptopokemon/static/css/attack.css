@@ -1,0 +1,15 @@
+.attack-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 200px;
+  width: 206px;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.card :hover{
+    opacity: 0.9;
+}

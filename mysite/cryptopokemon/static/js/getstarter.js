@@ -1,7 +1,7 @@
 $(document).ready(function name(params) {
     
-    $(".hero-object").on("click", function () {
-        var name = $(this).attr('class').split(" ")[3];
+    $(document).on("click", ".hero-object", function () {
+        var name = $(this).attr('class').split(" ")[1];
         console.log(name);
         
         var name2id = {
@@ -9,7 +9,11 @@ $(document).ready(function name(params) {
             'charmander': 3,
             'squirtle': 6,
         }
-        App.contractInstance.createStarter(name, name2id[name], function (error, result) {
+        App.contractInstance.createStarter(name, name2id[name], {
+            gas: 300000,
+            from: App.myAccount,
+            value: web3.toWei(0, 'ether')
+        }, function (error, result) {
             if (!error) {
                 var newPokemonEvent = App.contractInstance.NewPokemon();
 

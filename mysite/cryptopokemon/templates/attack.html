@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+    <div class="pokemonList row">
+        <div style="margin-left: 75px"></div>
+        <div class="pokemonHolder" style="display: none;">
+            <div class="card" style="width: 13rem; margin: 20px 20px 20px 20px">
+                <div class="attack-overlay overlay-blue">
+                    <div class="attack-text" style="text-align: center; position: relative; top: 40%"><i class="far fa-lg fa-check-circle"></i></div>
+                </div>
+                <br>
+                <img class="card-img-top" src = "" alt="Card image cap" style="width: 100px; height: 100px;">
+                <div class="card-body">
+                    <strong><h5 class="card-title" style="text-align: center;">Card title</h5></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr>
+    <div style="text-align: center">
+        <button type="button" class="btn btn-outline-danger" style="position: relative;">Battle</button>
+    </div>
+    <br>
+    <div class="pokemon-row row" style="visibility: hidden;">
+            <div class="card border-danger mypokemon" style="width:18em; display: block; margin-left: auto; margin-right: auto">
+                <img class="card-img-top" src="" alt="Card image cap" style="width: 100px; height: 100px;">
+                <div class="card-body">
+                    <strong>
+                        <h5 class="card-title" style="text-align: center;">Card title</h5>
+                    </strong>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <table class="stats-table">
+                        <tr>
+                            <th>Attack</th>
+                            <td class="attack"></td>
+                        </tr>
+                        <tr>
+                            <th>Defense</th>
+                            <td class="defense"></td>
+                        </tr>
+                        <tr>
+                            <th>Speed</th>
+                            <td class="speed"></td>
+                        </tr>
+                        <tr>
+                            <th>HP</th>
+                            <td class="hp"></td>
+                        </tr>
+                    </table>
+                </ul>
+                <br>
+            </div>
+            <table class="table table-striped battle-result" style="display: none">
+                <thead>
+                    <tr>
+                        <th>Turn</th>
+                        <th class="a-b">A->B</th>
+                        <th class="b-a">B->A</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="card border-success enemy" style="width:18em; display: block; margin-left: auto; margin-right: auto">
+                <img class="card-img-top" src="" alt="Card image cap" style="width: 100px; height: 100px;">
+                <div class="card-body">
+                    <strong>
+                        <h5 class="card-title" style="text-align: center;">Card title</h5>
+                    </strong>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <table class="stats-table">
+                        <tr>
+                            <th>Attack</th>
+                            <td class="attack"></td>
+                        </tr>
+                        <tr>
+                            <th>Defense</th>
+                            <td class="defense"></td>
+                        </tr>
+                        <tr>
+                            <th>Speed</th>
+                            <td class="speed"></td>
+                        </tr>
+                        <tr>
+                            <th>HP</th>
+                            <td class="hp"></td>
+                        </tr>
+                    </table>
+                </ul>
+                <br>
+            </div>
+    </div>
+{% endblock content%}
+
+{%block css %}
+<link href="{% static 'css/attack.css' %}" rel="stylesheet">
+{%endblock css %}
+
+{% block js %}
+<script src="{% static 'js/attack.js' %}"></script>
+{% endblock js %}

@@ -32,7 +32,6 @@ contract PokemonFactory is Primitives {
     struct WildPokemon {
         uint primitiveId;
         uint32 level;
-        uint fledded;
         bool capturable;
     }
 
@@ -118,6 +117,7 @@ contract PokemonFactory is Primitives {
 
     function createStarter(string _name, uint _primitiveId) public {
         require(_primitiveId == 0 || _primitiveId == 3 || _primitiveId == 6);
+        require(ownerPokemonCount[msg.sender] == 0);
         uint32 randDna = _generateRandomDna(_name);
         _createPokemon(_name, randDna, _primitiveId);
     }

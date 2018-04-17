@@ -32,7 +32,7 @@ contract PokemonAttack is PokemonHelper {
 
     function attack(uint _pokemonId, uint _targetId) external onlyOwnerOf(_pokemonId) returns (uint) {
         Pokemon storage myPokemon = pokemons[_pokemonId];
-        Pokemon storage enemyPokemon = pokemons[_targetId];
+        Pokemon memory enemyPokemon = pokemons[_targetId];
         uint rand;
         uint32 outlevel;
         uint32 my_damage;
@@ -105,7 +105,7 @@ contract PokemonAttack is PokemonHelper {
             }
         }
 
-        if (enemy_hp == 0 ){
+        if (enemy_hp == 0){
             // win xD
             myPokemon.winCount++;
             if (myPokemon.level >= enemyPokemon.level){
