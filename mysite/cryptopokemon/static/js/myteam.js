@@ -7,54 +7,103 @@ $(document).ready(function name(params) {
         2: 'timid',
         3: 'healthy'
     }
-    
-    App.contractInstance.getPopulation.call(function (error, result) {
-        if (!error) {
-            console.log("Population: " + result.toString());
+
+    App.contractInstance.getPokemonsByOwner.call(App.myAccount, function (error, results) {
+        if (!error){
+            console.log("Your pokemons: " + results);
             var row = $(".pokemonList");
-            for (let i = 0; i < result; i++) {
+            if (results.length == 1){
+                results = [results];
+            }
+            for (let i = 0; i < results.length; i++) {
                 var pokemon_template = $('.pokemonHolder').clone();
-                pokemon_template.find(".card").attr("class", "card border-primary pokemon_" + i.toString());
+                pokemon_template.find(".card").attr("class", "card border-primary pokemon_" + results[i].toString());
                 row.append(pokemon_template.clone().html());
+
+                App.contractInstance.getPokemonInfo.call(results[i], function (error, info) {
+                    if (!error) {
+                        console.log(info);
+                        
+                        $(".pokemon_" + results[i]).find(".card-title").text(info[0] + " (" + info[1] + ")");
+                        $(".pokemon_" + results[i]).find(".nature").text(id2nature[info[2]]);
+                        $(".pokemon_" + results[i]).find(".level").text(info[5]);
+                        $(".pokemon_" + results[i]).find("img").attr("src", "https://img.pokemondb.net/artwork/" + info[1] + ".jpg");
+                    }
+                    else {
+                        console.log(error);
+
+                    }
+                })
+            }
+
+            for (let i = 0; i < results.length; i++) {
+                App.contractInstance.getPokemonStats.call(i, function (error, stats) {
+                    if (!error) {
+                        $(".pokemon_" + results[i]).find(".attack").text(stats[0]);
+                        $(".pokemon_" + results[i]).find(".defense").text(stats[1]);
+                        $(".pokemon_" + results[i]).find(".speed").text(stats[2]);
+                        $(".pokemon_" + results[i]).find(".hp").text(stats[3])
+                    }
+                    else {
+                        console.log(error);
+
+                    }
+                })
             }
         }
-        else {
+        else{
             console.log(error);
-    
+            
         }
-    
-        for (let i = 0; i < result; i++) {
-            App.contractInstance.getPokemonInfo.call(i, function (error, info) {
-                if (!error) {
-                    $(".pokemon_" + i).find(".card-title").text(info[0] + " (" + info[1] + ")");
-                    $(".pokemon_" + i).find(".nature").text(id2nature[info[2]]);
-                    $(".pokemon_" + i).find(".level").text(info[5]);
-                    $(".pokemon_" + i).find("img").attr("src", "https://img.pokemondb.net/artwork/" + info[1] + ".jpg");
-                }
-                else {
-                    console.log(error);
-    
-                }
-            })
-    
-        }
-
-        for (let i = 0; i < result; i++) {
-            App.contractInstance.getPokemonStats.call(i, function (error, stats) {
-                if (!error) {
-                    $(".pokemon_" + i).find(".attack").text(stats[0]);
-                    $(".pokemon_" + i).find(".defense").text(stats[1]);
-                    $(".pokemon_" + i).find(".speed").text(stats[2]);
-                    $(".pokemon_" + i).find(".hp").text(stats[3])
-                }
-                else {
-                    console.log(error);
-    
-                }
-            })
-    
-        }
+        
     })
+    // App.contractInstance.getPopulation.call(function (error, result) {
+    //     if (!error) {
+    //         console.log("Population: " + result.toString());
+    //         var row = $(".pokemonList");
+    //         for (let i = 0; i < result; i++) {
+    //             var pokemon_template = $('.pokemonHolder').clone();
+    //             pokemon_template.find(".card").attr("class", "card border-primary pokemon_" + i.toString());
+    //             row.append(pokemon_template.clone().html());
+    //         }
+    //     }
+    //     else {
+    //         console.log(error);
+    
+    //     }
+    
+    //     for (let i = 0; i < result; i++) {
+    //         App.contractInstance.getPokemonInfo.call(i, function (error, info) {
+    //             if (!error) {
+    //                 $(".pokemon_" + i).find(".card-title").text(info[0] + " (" + info[1] + ")");
+    //                 $(".pokemon_" + i).find(".nature").text(id2nature[info[2]]);
+    //                 $(".pokemon_" + i).find(".level").text(info[5]);
+    //                 $(".pokemon_" + i).find("img").attr("src", "https://img.pokemondb.net/artwork/" + info[1] + ".jpg");
+    //             }
+    //             else {
+    //                 console.log(error);
+    
+    //             }
+    //         })
+    
+    //     }
+
+    //     for (let i = 0; i < result; i++) {
+    //         App.contractInstance.getPokemonStats.call(i, function (error, stats) {
+    //             if (!error) {
+    //                 $(".pokemon_" + i).find(".attack").text(stats[0]);
+    //                 $(".pokemon_" + i).find(".defense").text(stats[1]);
+    //                 $(".pokemon_" + i).find(".speed").text(stats[2]);
+    //                 $(".pokemon_" + i).find(".hp").text(stats[3])
+    //             }
+    //             else {
+    //                 console.log(error);
+    
+    //             }
+    //         })
+    
+    //     }
+    // })
 })
 
 

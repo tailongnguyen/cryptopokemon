@@ -121,4 +121,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = "/home/tailongnguyen/Study/Technology Workshops/ethauction/mysite/media/"
+MEDIA_ROOT = "/home/tailongnguyen/Study/Technology Workshops/cryptopokemon/mysite/media/"

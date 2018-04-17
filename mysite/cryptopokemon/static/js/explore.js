@@ -64,6 +64,8 @@ $(document).ready(function name(params) {
         var id = $(this).attr('class').split(" ")[3].split('_')[1];
         App.contractInstance.capturePokemon(parseInt(id), function (error, captured) {
             if (!error) {
+                console.log("Captured: " + captured);
+                
                 if (captured){
                     var newPokemonEvent = App.contractInstance.NewPokemon();
     

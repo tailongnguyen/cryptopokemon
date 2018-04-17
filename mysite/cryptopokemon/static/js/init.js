@@ -1,7 +1,7 @@
 App = {
     web3Provider: null,
     myAccount: null,
-    contract_address: "0x2e2d10b41b7c8ddb995568a87185428d9a513ead",
+    contract_address: "0xb9a219631aed55ebc3d998f17c3840b7ec39c0cc",
     contractInstance: null,
     initWeb3: function () {
         // Is there an injected web3 instance?
@@ -911,6 +911,8 @@ App = {
     initContract: function () {
         var contractInstance = App.MyContract.at(App.contract_address);
         App.myAccount = web3.eth.accounts[0];
+        console.log("Your address: " + App.myAccount);
+        
         App.contractInstance = contractInstance;        
         
     }
