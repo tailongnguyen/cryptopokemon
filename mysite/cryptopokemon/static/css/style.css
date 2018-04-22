@@ -4,6 +4,10 @@
   }
 } */
 
+* {
+  font-family: 'Ubuntu Condensed', sans-serif;
+}
+
 .team-image {
   -webkit-border-radius: 99em;
   -moz-border-radius: 99em;
@@ -168,4 +172,22 @@ footer {
   margin-left: auto;
 	margin-right: auto;
 	display: block;
+}
+
+.card-title {
+  font-family: 'Lobster Two', cursive;
+  font-size: 30px;
+}
+
+.card {
+  width: 20rem; 
+  display: block;
+  margin-left: auto; 
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.card-body {
+  text-align: center;
 }

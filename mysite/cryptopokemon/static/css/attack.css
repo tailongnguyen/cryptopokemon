@@ -3,7 +3,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  height: 200px;
+  height: 243px;
   width: 206px;
   opacity: 0;
   transition: .5s ease;
@@ -12,4 +12,9 @@
 
 .card :hover{
     opacity: 0.9;
+}
+
+.attack-level{
+  font-family: 'Indie Flower', cursive;
+  font-size: 20px;
 }

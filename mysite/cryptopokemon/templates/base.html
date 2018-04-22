@@ -17,12 +17,11 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
      {% block css %} {% endblock css %}
-    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Lobster|Lobster+Two|Ubuntu+Condensed" rel="stylesheet">
+
     <link rel="icon" type="image/png" href="https://png.icons8.com/ios/1600/pokeball.png" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
       crossorigin="anonymous"></script>
-    <script src="{% static 'Notifications-master/dist/notifications.js' %}"></script>
-
   </head> 
 
   <body>
@@ -40,9 +39,6 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'cryptopokemon:attack' %}">Attack</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Feeding</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'cryptopokemon:explore' %}">Explore</a>

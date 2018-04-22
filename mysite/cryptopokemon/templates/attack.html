@@ -2,99 +2,126 @@
 {% load static %}
 
 {% block content %}
-    <div class="container">
-    <div class="pokemonList row">
-        <div style="margin-left: 75px"></div>
-        <div class="pokemonHolder" style="display: none;">
-            <div class="card" style="width: 13rem; margin: 20px 20px 20px 20px">
-                <div class="attack-overlay overlay-blue">
-                    <div class="attack-text" style="text-align: center; position: relative; top: 40%"><i class="far fa-lg fa-check-circle"></i></div>
-                </div>
-                <br>
-                <img class="card-img-top" src = "" alt="Card image cap" style="width: 100px; height: 100px;">
-                <div class="card-body">
-                    <strong><h5 class="card-title" style="text-align: center;">Card title</h5></strong>
+    <!-- display my pokemons -->
+    <div class="container my-pokemons">
+        <div class="pokemonList row">
+            <div class="pokemonHolder" style="display: none;">
+                <div class="card my-card" style="width: 13rem;">
+                    <div class="attack-overlay overlay-blue">
+                        <div style="text-align: center; position: relative; top: 40%"><i class="far fa-lg fa-check-circle"></i></div>
+                    </div>
+                    <br>
+                    <img class="card-img-top" src = "" alt="Card image cap" style="width: 100px; height: 100px;">
+                    <div class="card-body">
+                        <strong><h5 class="card-title" style="text-align: center;">Card title</h5></strong><span class="attack-level"></span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <hr>
+
+    <!-- display random-enemy -->
+    <div style="text-align: center">
+        <button type="button" class="btn random-btn btn-outline-info" style="position: relative;">Random enemy</button>
+    </div>
+    <div class="container random-enemy">
+        <div class="card" style="width: 13rem;">
+            <br>
+            <img class="card-img-top" src="https://www.freeiconspng.com/uploads/question-mark-questionmark-help-talk-support-icon-27.png" alt="Card image cap" style="width: 100px; height: 100px;">
+            <div class="card-body">
+                <strong>
+                    <h5 class="card-title" style="text-align: center;">none</h5>
+                </strong>
+                <span class="attack-level"> Lv 0</span>
+            </div>
+        </div>
     </div>
     <hr>
+
+    <!-- showing battle result -->
     <div style="text-align: center">
-        <button type="button" class="btn btn-outline-danger" style="position: relative;">Battle</button>
+        <button type="button" class="btn battle-btn btn-outline-danger" style="position: relative;">Battle</button>
     </div>
     <br>
-    <div class="pokemon-row row" style="visibility: hidden;">
-            <div class="card border-danger mypokemon" style="width:18em; display: block; margin-left: auto; margin-right: auto">
-                <img class="card-img-top" src="" alt="Card image cap" style="width: 100px; height: 100px;">
-                <div class="card-body">
-                    <strong>
-                        <h5 class="card-title" style="text-align: center;">Card title</h5>
-                    </strong>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <table class="stats-table">
-                        <tr>
-                            <th>Attack</th>
-                            <td class="attack"></td>
-                        </tr>
-                        <tr>
-                            <th>Defense</th>
-                            <td class="defense"></td>
-                        </tr>
-                        <tr>
-                            <th>Speed</th>
-                            <td class="speed"></td>
-                        </tr>
-                        <tr>
-                            <th>HP</th>
-                            <td class="hp"></td>
-                        </tr>
-                    </table>
-                </ul>
-                <br>
-            </div>
-            <table class="table table-striped battle-result" style="display: none">
-                <thead>
-                    <tr>
-                        <th>Turn</th>
-                        <th class="a-b">A->B</th>
-                        <th class="b-a">B->A</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <div class="card border-success enemy" style="width:18em; display: block; margin-left: auto; margin-right: auto">
-                <img class="card-img-top" src="" alt="Card image cap" style="width: 100px; height: 100px;">
-                <div class="card-body">
-                    <strong>
-                        <h5 class="card-title" style="text-align: center;">Card title</h5>
-                    </strong>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <table class="stats-table">
-                        <tr>
-                            <th>Attack</th>
-                            <td class="attack"></td>
-                        </tr>
-                        <tr>
-                            <th>Defense</th>
-                            <td class="defense"></td>
-                        </tr>
-                        <tr>
-                            <th>Speed</th>
-                            <td class="speed"></td>
-                        </tr>
-                        <tr>
-                            <th>HP</th>
-                            <td class="hp"></td>
-                        </tr>
-                    </table>
-                </ul>
-                <br>
-            </div>
+
+    <div style="text-align: center">
+        <h5 class="card-title battle-res"></h5>
     </div>
+    <div class="container battle-field">
+        <div class="pokemon-row row" style="visibility: hidden;">
+                <div class="card border-danger mypokemon" style="width:18em; display: block; margin-left: auto; margin-right: auto">
+                    <br>
+                    <img class="card-img-top" src="" alt="Card image cap" style="width: 100px; height: 100px;">
+                    <div class="card-body">
+                        <strong><h5 class="card-title" style="text-align: center;">Card title</h5></strong>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <table class="stats-table">
+                            <tr>
+                                <th>Attack</th>
+                                <td class="attack"></td>
+                            </tr>
+                            <tr>
+                                <th>Defense</th>
+                                <td class="defense"></td>
+                            </tr>
+                            <tr>
+                                <th>Speed</th>
+                                <td class="speed"></td>
+                            </tr>
+                            <tr>
+                                <th>HP</th>
+                                <td class="hp"></td>
+                            </tr>
+                        </table>
+                    </ul>
+                    <br>
+                </div>
+                <table class="table table-striped battle-result" style="display: none">
+                    <thead>
+                        <tr>
+                            <th>Turn</th>
+                            <th class="a-b">A->B</th>
+                            <th class="b-a">B->A</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div class="card border-success enemy" style="width:18em; display: block; margin-left: auto; margin-right: auto">
+                    <br>
+                    <img class="card-img-top" src="" alt="Card image cap" style="width: 100px; height: 100px;">
+                    <div class="card-body">
+                        <strong>
+                            <h5 class="card-title" style="text-align: center;">Card title</h5>
+                        </strong>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <table class="stats-table">
+                            <tr>
+                                <th>Attack</th>
+                                <td class="attack"></td>
+                            </tr>
+                            <tr>
+                                <th>Defense</th>
+                                <td class="defense"></td>
+                            </tr>
+                            <tr>
+                                <th>Speed</th>
+                                <td class="speed"></td>
+                            </tr>
+                            <tr>
+                                <th>HP</th>
+                                <td class="hp"></td>
+                            </tr>
+                        </table>
+                    </ul>
+                    <br>
+                </div>
+        </div>
+    </div>
+    <br>
 {% endblock content%}
 
 {%block css %}

@@ -1,56 +1,224 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block content %}
-    <div class="container">
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container">
     <div class="pokemonList row">
         <div class="pokemonHolder" style="display: none;">
-            <div class="card" style="width: 18rem; margin: 20px 20px 20px 20px">
-                <img class="card-img-top" src = "" alt="Card image cap" style="width: 100px; height: 100px;">
+            <div class="card">
+                <br>
+                <img class="card-img-top" src="" alt="Card image cap" style="width: 100px; height: 100px;">
                 <div class="card-body">
-                    <strong><h5 class="card-title" style="text-align: center;">Card title</h5></strong>
+                    <strong>
+                        <h5 class="card-title" style="text-align: center;">Card title</h5>
+                    </strong>
                     <p class="card-text">This is to describe your pokemon, including information about appearance, habit, fun facts, ..v..v.</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <table class="stats-table">
-                    <tr>
-                        <th>Level</th>
-                        <td class="level"></td>
-                    </tr>
-                    <tr>
-                        <th>Nature</th>
-                        <td class="nature"></td>
-                    </tr>
-                    <tr>
-                        <th>Attack</th>
-                        <td class="attack"></td>
-                    </tr>
-                    <tr>
-                        <th>Defense</th>
-                        <td class="defense"></td>
-                    </tr>
-                    <tr>
-                        <th>Speed</th>
-                        <td class="speed"></td>
-                    </tr>
-                    <tr>
-                        <th>HP</th>
-                        <td class="hp"></td>
-                    </tr>
+                        <tr>
+                            <th>Level</th>
+                            <td class="level"></td>
+                        </tr>
+                        <tr>
+                            <th>Nature</th>
+                            <td class="nature"></td>
+                        </tr>
+                        <tr>
+                            <th>Attack</th>
+                            <td class="attack"></td>
+                        </tr>
+                        <tr>
+                            <th>Defense</th>
+                            <td class="defense"></td>
+                        </tr>
+                        <tr>
+                            <th>Speed</th>
+                            <td class="speed"></td>
+                        </tr>
+                        <tr>
+                            <th>HP</th>
+                            <td class="hp"></td>
+                        </tr>
                     </table>
                 </ul>
                 <br>
                 <div class="card-body pokemonDescription">
                     <a href="#" class="card-link">More details</a>
+                    <button type="button" class="btn btn-outline-success feeding-btn" data-toggle="modal" data-target="#myModal" style="
+                        float: right;
+                    ">Feed</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog" style="max-width: 90%;">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" style="text-align: center">Which one?</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="row" style="margin-left: 0rem;width: 100%;">
+                <div class="card milk-food col-md-3">
+                    <img class="card-img-top" src="/media/milk_icon.png" alt="Card image cap" style="width: 100px; height: 100px;">
+                    <div class="card-body">
+                        <strong>
+                            <h5 class="card-title" style="text-align: center;">Milk</h5>
+                        </strong>
+                        <p class="card-text">A nutritious drink for POKéMON. It raises the base HP stat of one POKéMON.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <table class="stats-table">
+                            <tr>
+                                <th>Price</th>
+                                <td class="price">0.001 ETH</td>
+                            </tr>
+                            <tr>
+                                <th>Attack</th>
+                                <td class="attack">0</td>
+                            </tr>
+                            <tr>
+                                <th>Defense</th>
+                                <td class="defense">0</td>
+                            </tr>
+                            <tr>
+                                <th>Speed</th>
+                                <td class="speed">0</td>
+                            </tr>
+                            <tr>
+                                <th>HP</th>
+                                <td class="hp">2</td>
+                            </tr>
+                        </table>
+                    </ul>
+                    <div class="card-body pokemonDescription" style=" padding-bottom:.2rem">
+                        <button type="button" class="btn  feeding-btn btn-outline-success" data-toggle="modal" data-target="#myModal" style="
+                                        display: block; margin-left:auto; margin-right:auto; 
+                                    ">Feed</button>
+                    </div>
+                    <br>
+                </div>
+                <div class="card protein-food col-md-3">
+                    <img class="card-img-top" src="/media/protein_icon.png" alt="Card image cap" style="width: 100px; height: 100px;">
+                    <div class="card-body">
+                        <strong>
+                            <h5 class="card-title" style="text-align: center;">Protein</h5>
+                        </strong>
+                        <p class="card-text">A nutritious drink for POKéMON. It raises the base ATTACK stat of one POKéMON.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <table class="stats-table">
+                            <tr>
+                                <th>Price</th>
+                                <td class="price">0.001 ETH</td>
+                            </tr>
+                            <tr>
+                                <th>Attack</th>
+                                <td class="attack">1</td>
+                            </tr>
+                            <tr>
+                                <th>Defense</th>
+                                <td class="defense">0</td>
+                            </tr>
+                            <tr>
+                                <th>Speed</th>
+                                <td class="speed">0</td>
+                            </tr>
+                            <tr>
+                                <th>HP</th>
+                                <td class="hp">0</td>
+                            </tr>
+                        </table>
+                    </ul>
+                    <div class="card-body pokemonDescription" style=" padding-bottom:.2rem">
+                        <button type="button" class="btn btn-outline-success feeding-btn" data-toggle="modal" data-target="#myModal" style="
+                                            display: block; margin-left:auto; margin-right:auto;
+                                        ">Feed</button>
+                    </div>
+                </div>
+                <div class="card carbos-food col-md-3">
+                    <img class="card-img-top" src="/media/carbos_icon.png" alt="Card image cap" style="width: 100px; height: 100px;">
+                    <div class="card-body">
+                        <strong>
+                            <h5 class="card-title" style="text-align: center;">Carbos</h5>
+                        </strong>
+                        <p class="card-text">A nutritious drink for POKéMON. It raises the base SPEED stat of one POKéMON.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <table class="stats-table">
+                            <tr>
+                                <th>Price</th>
+                                <td class="price">0.001 ETH</td>
+                            </tr>
+                            <tr>
+                                <th>Attack</th>
+                                <td class="attack">0</td>
+                            </tr>
+                            <tr>
+                                <th>Defense</th>
+                                <td class="defense">0</td>
+                            </tr>
+                            <tr>
+                                <th>Speed</th>
+                                <td class="speed">1</td>
+                            </tr>
+                            <tr>
+                                <th>HP</th>
+                                <td class="hp">0</td>
+                            </tr>
+                        </table>
+                    </ul>
+                    <div class="card-body pokemonDescription" style=" padding-bottom:.2rem">
+                        <button type="button" class="btn btn-outline-success  feeding-btn" data-toggle="modal" data-target="#myModal" style="
+                                                display: block; margin-left:auto; margin-right:auto;
+                                            ">Feed</button>
+                    </div>
+                </div>
+                <div class="card iron-food col-md-3">
+                    <img class="card-img-top" src="/media/iron_icon.png" alt="Card image cap" style="width: 100px; height: 100px;">
+                    <div class="card-body">
+                        <strong>
+                            <h5 class="card-title" style="text-align: center;">Iron</h5>
+                        </strong>
+                        <p class="card-text">A nutritious drink for POKéMON. It raises the base DEFENSE stat of one POKéMON.</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <table class="stats-table">
+                            <tr>
+                                <th>Price</th>
+                                <td class="price">0.001 ETH</td>
+                            </tr>
+                            <tr>
+                                <th>Attack</th>
+                                <td class="attack">0</td>
+                            </tr>
+                            <tr>
+                                <th>Defense</th>
+                                <td class="defense">1</td>
+                            </tr>
+                            <tr>
+                                <th>Speed</th>
+                                <td class="speed">0</td>
+                            </tr>
+                            <tr>
+                                <th>HP</th>
+                                <td class="hp">0</td>
+                            </tr>
+                        </table>
+                    </ul>
+                    <div class="card-body pokemonDescription" style=" padding-bottom:.2rem">
+                        <button type="button" class="btn btn-outline-success  feeding-btn" data-toggle="modal" data-target="#myModal" style="
+                                                    display: block; margin-left:auto; margin-right:auto;
+                                                ">Feed</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-    
-
-{% endblock content%}
-
-{% block js %}
-<script src="{% static 'js/myteam.js' %}"></script>
-{% endblock js %}
+</div>
+{% endblock content%} {% block js %}
+<script src="{% static 'js/myteam.js' %}"></script> {% endblock js %}

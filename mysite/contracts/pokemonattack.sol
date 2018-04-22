@@ -109,7 +109,12 @@ contract PokemonAttack is PokemonHelper {
             // win xD
             myPokemon.winCount++;
             if (myPokemon.level >= enemyPokemon.level){
-                myPokemon.exp++;
+                if (myPokemon.exp + 1 == myPokemon.levelThreshold){
+                    _levelUp(_pokemonId);
+                }
+                else{
+                    myPokemon.exp += outlevel;
+                }
             }
             else{
                 if (myPokemon.exp + outlevel >= myPokemon.levelThreshold){

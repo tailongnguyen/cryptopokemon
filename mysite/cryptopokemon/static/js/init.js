@@ -940,6 +940,10 @@ App = {
         ]);
         return App.initContract();
     },
+    
+    sleep: function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    },
 
     initContract: function () {
         var contractInstance = App.MyContract.at(App.contract_address);

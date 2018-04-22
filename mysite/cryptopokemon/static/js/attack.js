@@ -6,7 +6,7 @@ $(document).ready(function name(params) {
     App.contractInstance.getPokemonsByOwner.call(App.myAccount, function (error, results) {
         if (!error) {
             console.log("Your pokemons: " + results);
-            var row = $(".pokemonList");
+            var row = $(".my-pokemons").find(".pokemonList");
             if (results.length == 1) {
                 results = [results];
             }
@@ -19,7 +19,8 @@ $(document).ready(function name(params) {
                     if (!error) {
                         console.log(info);
 
-                        $(".pokemon_" + results[i]).find(".card-title").text(info[1] + " " + info[5]);
+                        $(".pokemon_" + results[i]).find(".card-title").text(info[1]);
+                        $(".pokemon_" + results[i]).find(".attack-level").text(" Lv " + info[5]);
                         $(".pokemon_" + results[i]).find("img").attr("src", "https://img.pokemondb.net/artwork/" + info[1] + ".jpg");
                     }
                     else {
@@ -28,35 +29,78 @@ $(document).ready(function name(params) {
                     }
                 })
             }
-
+            
         }
         else {
             console.log(error);
-
+            
         }
+        
+    })
+    
+    $(document).on("click", ".random-btn", function () {
+        App.contractInstance.getPokemonsByOwner.call(App.myAccount, function (error, my_ids) {
+            if (!error) {
+                my_ids = my_ids.toString();
+                if (my_ids.length == 1){
+                    my_ids = [my_ids]
+                }
+                App.contractInstance.getPopulation.call(function (err, res) {
+                    if (!err) {
+    
+                        stop = false;
+                        var rand;
+                        while (! stop) {
+                            rand = Math.floor(Math.random() * res);
+                            if (!my_ids.includes(rand.toString())){
+                                stop = true;
+                            }
+                        }
+                        App.contractInstance.getPokemonInfo.call(rand, function (error, info) {
+                            if (!error) {
+                                console.log(info);
+                                
+                                var enemy = $(".random-enemy");
+                                enemy.find(".card").attr("class", "card border-primary pokemon_" + rand.toString());
+                                enemy.find(".card-title").text(info[1]);
+                                enemy.find(".attack-level").text(" Lv " + info[5]);
+                                enemy.find("img").attr("src", "https://img.pokemondb.net/artwork/" + info[1] + ".jpg");
+                            }
+                            else {
+                                console.log(error);
 
+                            }
+                        })
+                        
+                    }
+                    else {
+                        console.log(err);
+                        
+                    }
+                })
+            }            
+            else {
+                console.log(err);
+                
+            }
+        })
+        
     })
 
     $(document).on("click", ".card", function () {
         var opacity = $(this).find(".attack-overlay").css("opacity");
         var id = $(this).attr("class").split(" ")[2].split("_")[1];
         
-        if (opacity != 1 && selected.length < 2) {
+        if (selected.length < 1) {
             selected.push(id);
             console.log(opacity, "Selected: " + selected);
             $(this).find(".attack-overlay").attr("style", "opacity: 1");
             $(this).find(".attack-overlay").find("i").attr("class", "fas fa-7x fa-check-circle");
         }
         else{
-            var index = selected.indexOf(id);
-            console.log(index);
-            
-            if (index > -1){
-                selected.splice(index, 1);
-                console.log(opacity, "Selected: " + selected);
-                $(this).find(".attack-overlay").attr("style", "opacity: 0");
-                $(this).find(".attack-overlay").find("i").attr("class", "far fa-7x fa-check-circle");
-            }
+            selected = [];
+            $(this).find(".attack-overlay").attr("style", "opacity: 0");
+            $(this).find(".attack-overlay").find("i").attr("class", "far fa-7x fa-check-circle");
         }
     })
 
@@ -66,6 +110,7 @@ $(document).ready(function name(params) {
         var turns_2 = [];
         var hp1 = _hp1;
         var hp2 = _hp2;
+        var battle_res;
         if (parseInt(sp1) >= parseInt(sp2)) {
             mod = 0;
             $(".a-b").attr("style", "color: red");
@@ -121,15 +166,17 @@ $(document).ready(function name(params) {
             }    
         }
 
-        $(".battle-result").attr("style", "width:18em; display: block; margin-left: auto; margin-right: auto; border: 1px solid black");
-        $(".battle-reuslt").find('tbody').children().remove();
+        $(".battle-result").attr("style", "width:auto; height: 100%; display: block; margin-left: auto; margin-right: auto; border: 1px solid black");
+        $(".battle-result").find('tbody').children().remove();
         $(".battle-result").find('tbody').append("<tr><td>0</td ><td>" + _hp2 + "</td><td>" + _hp1 + "</td></tr >")
         for(let i = 0; i < Math.max(turns_1.length, turns_2.length); i++){
             if (i >= turns_1.length){
                 $(".battle-result").find('tbody').append("<tr><td>" + (i+1) + "</td ><td>" + "death" + "</td><td>" + turns_2[i] + "</td></tr >")
+                battle_res = 'lose';
             }
             else if (i >= turns_2.length){
                 $(".battle-result").find('tbody').append("<tr><td>" + (i+1) + "</td ><td>" + turns_1[i] + "</td><td>" + "death" + "</td></tr >")
+                battle_res = 'win';
             }
             else{
                 $(".battle-result").find('tbody').append("<tr><td>" + (i+1) + "</td ><td>" + turns_1[i] + "</td><td>" + turns_2[i] + "</td></tr >")
@@ -138,21 +185,33 @@ $(document).ready(function name(params) {
 
         if (turns_1.length == turns_2.length){
             if (hp1 == 0){
-                $(".battle-result").find('tbody').append("<tr><td>" + (turns_1.length + 1) + "</td ><td></td><td>death</td></tr >")                
+                $(".battle-result").find('tbody').append("<tr><td>" + (turns_1.length + 1) + "</td ><td></td><td>death</td></tr >")
+                battle_res = 'lose';
             }
             else {
                 $(".battle-result").find('tbody').append("<tr><td>" + (turns_1.length + 1) + "</td ><td>" + "death" + "</td><td></td></tr >")
+                battle_res = 'win';
             }
+        }
+
+        if (battle_res == 'win') {
+            $(".battle-res").text("YOU WIN!");
+        }
+        else{
+            $(".battle-res").text("YOU LOSE!");
         }
 
         resultShowed = true;
     }
 
-    $(document).on("click", ".btn", function () {
-        if(selected.length < 2) {
+
+    $(document).on("click", ".battle-btn", function () {
+        if(selected.length < 1) {
             return
         }
-        console.log(selected);
+    
+        var enemy_id = $(".random-enemy").find(".card").attr("class").split(" ")[2].split("_")[1];
+        console.log("Your id: " + selected[0] + " and enemy's: " + enemy_id);
         
 
         App.contractInstance.getPokemonInfo.call(parseInt(selected[0]), function (error, info) {
@@ -169,7 +228,7 @@ $(document).ready(function name(params) {
             }
         })
 
-        App.contractInstance.getPokemonInfo.call(parseInt(selected[1]), function (error, info) {
+        App.contractInstance.getPokemonInfo.call(parseInt(enemy_id), function (error, info) {
             if (!error) {
                 console.log(info);
 
@@ -196,7 +255,7 @@ $(document).ready(function name(params) {
             }
         })
 
-        App.contractInstance.getPokemonStats.call(parseInt(selected[1]), (error, stats2) => {
+        App.contractInstance.getPokemonStats.call(parseInt(enemy_id), (error, stats2) => {
             if (!error) {
                 $(".enemy").find(".attack").text(stats2[0]);
                 $(".enemy").find(".defense").text(stats2[1]);
@@ -211,17 +270,21 @@ $(document).ready(function name(params) {
 
         $(".pokemon-row").css("visibility", "visible");
 
-        resultShowed = false;
-        App.contractInstance.attack(parseInt(selected[0]), parseInt(selected[1]), {
+        // resultShowed = false;
+
+        App.contractInstance.attack(parseInt(selected[0]), parseInt(enemy_id), {
             gas: 400000,
             from: App.myAccount,
             value: web3.toWei(0, 'ether')
-        }, (err, res) => {
+        }, async function (err, res){
             if (!err) {
                 console.log(res);
                 var pokemonBattleEvent = App.contractInstance.PokemonBattle();
-
+                // await App.sleep(1000);
                 pokemonBattleEvent.watch((err, res) => {
+                    if (res.args._id1 != selected[0] || res.args._id2 != enemy_id){
+                        return
+                    }
                     console.log("Battle: " + res.args._id1 + " vs " + res.args._id2);
                     App.contractInstance.getPokemonStats.call(res.args._id1, (err, stats1) => {
                         var sp1 = stats1[2];
@@ -229,9 +292,9 @@ $(document).ready(function name(params) {
                         App.contractInstance.getPokemonStats.call(res.args._id2, (err, stats2) => {
                             var sp2 = stats2[2];
                             var hp2 = stats2[3];
-                            if (! resultShowed){
-                                App.showBattleResult(res.args._id1, res.args._id2, sp1, hp1, sp2, hp2, res.args.turns);
-                            }
+                            // if (! resultShowed){
+                            App.showBattleResult(res.args._id1, res.args._id2, sp1, hp1, sp2, hp2, res.args.turns);
+                            // }
                         })
                     })
                 })

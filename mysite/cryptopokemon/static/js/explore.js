@@ -42,10 +42,12 @@ $(document).ready(function name(params) {
             gas: 400000,
             from: App.myAccount,
             value: web3.toWei(0, 'ether')
-        }, function (error, captured) {
+        }, async function (error, captured) {
             if (!error) {
                 console.log("Captured: " + captured);
                 var pokemonCaptureFailEvent = App.contractInstance.PokemonCaptureFail();
+
+                await App.sleep(3000);
                 pokemonCaptureFailEvent.watch((error1, result1) => {
                     if (!error1) {
                         alert("Grr! It breaks the ball!");
@@ -87,6 +89,7 @@ $(document).ready(function name(params) {
                 var capturable = result[2];
                 if (!capturable) {
                     $(".wild_" + i).find('.text').text("Captured!");
+                    $(".wild_" + i).on("click", function () { });
                 }
                 else {
                     $(".wild_" + i).find('.text').text("Level " + level);
