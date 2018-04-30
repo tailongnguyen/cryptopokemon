@@ -10,7 +10,7 @@ contract PokemonFactory is Primitives {
     using SafeMath for uint32;
     using SafeMath for uint16;
 
-    event NewPokemon(uint pokemonId, string name, uint32 dna);
+    event NewPokemon(uint pokemonId, string name, uint32 dna, address indexed _creator);
 
     uint cooldownTime = 30 seconds;
 
@@ -106,7 +106,7 @@ contract PokemonFactory is Primitives {
         pokemonToOwner[id] = msg.sender;
         
         ownerPokemonCount[msg.sender] = ownerPokemonCount[msg.sender].add(1);
-        NewPokemon(pokemons.length - 1, _name, _dna);
+        emit NewPokemon(pokemons.length - 1, _name, _dna, msg.sender);
         return id;
     }
 

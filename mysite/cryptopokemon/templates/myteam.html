@@ -1,5 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="container">
+    <h1 style="visibility: hidden; text-align: center"> You do not have any pokemon yet. <a href="{% url 'cryptopokemon:get starter' %}">Go</a> get one now! </h1>
+
     <div class="pokemonList row">
         <div class="pokemonHolder" style="display: none;">
             <div class="card">
@@ -37,15 +39,26 @@
                             <th>HP</th>
                             <td class="hp"></td>
                         </tr>
+                        <tr>
+                            <th><a href="{% url 'cryptopokemon:detail' %}" class="card-link">More details</a></th>
+                            <td></td>
+                        </tr>
+                        
                     </table>
                 </ul>
                 <br>
                 <div class="card-body pokemonDescription">
-                    <a href="#" class="card-link">More details</a>
                     <button type="button" class="btn btn-outline-success feeding-btn" data-toggle="modal" data-target="#myModal" style="
-                        float: right;
+                         margin-left: auto; margin-right: auto; display: inline; width: 5em;
                     ">Feed</button>
+                    <button type="button" class="btn btn-outline-warning levelup-btn" style="
+                         margin-left: auto; margin-right: auto; display: inline; width: 5em;
+                    ">Level Up</button>
+                    <button type="button" class="btn btn-outline-danger evolve-btn" style="
+                         margin-left: auto; margin-right: auto; display: inline; width: 5em;
+                    ">Evolve</button>
                 </div>
+                <br>
             </div>
         </div>
     </div>

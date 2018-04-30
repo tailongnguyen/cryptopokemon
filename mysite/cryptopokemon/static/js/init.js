@@ -3,7 +3,7 @@ App = {
     myAccount: null,
     // contract_address: "0xc39e711358a46f3117a126ec2f407d6ef64ecbde",
     // contract_address: "0x2e2d10b41b7c8ddb995568a87185428d9a513ead",
-    contract_address: "0x8cdaf0cd259887258bc13a92c0a6da92698644c0",
+    contract_address: "0xb9a219631aed55ebc3d998f17c3840b7ec39c0cc",
     contractInstance: null,
     initWeb3: function () {
         // Is there an injected web3 instance?
@@ -15,6 +15,23 @@ App = {
         }
         web3 = new Web3(App.web3Provider);
         App.MyContract = web3.eth.contract([
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "name": "previousOwner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "newOwner",
+                        "type": "address"
+                    }
+                ],
+                "name": "OwnershipTransferred",
+                "type": "event"
+            },
             {
                 "constant": false,
                 "inputs": [
@@ -87,34 +104,22 @@ App = {
                 "anonymous": false,
                 "inputs": [
                     {
-                        "indexed": false,
-                        "name": "pokemonId",
-                        "type": "uint256"
+                        "indexed": true,
+                        "name": "_owner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "_approved",
+                        "type": "address"
                     },
                     {
                         "indexed": false,
-                        "name": "name",
-                        "type": "string"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "dna",
-                        "type": "uint32"
-                    }
-                ],
-                "name": "NewPokemon",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_pokemonId",
+                        "name": "_tokenId",
                         "type": "uint256"
                     }
                 ],
-                "name": "PokemonEvolve",
+                "name": "Approval",
                 "type": "event"
             },
             {
@@ -126,12 +131,29 @@ App = {
                         "type": "uint256"
                     },
                     {
-                        "indexed": false,
-                        "name": "_level",
-                        "type": "uint32"
+                        "indexed": true,
+                        "name": "_owner",
+                        "type": "address"
                     }
                 ],
                 "name": "PokemonLevelUp",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_pokemonId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "PokemonEvolve",
                 "type": "event"
             },
             {
@@ -160,62 +182,6 @@ App = {
                 "anonymous": false,
                 "inputs": [
                     {
-                        "indexed": false,
-                        "name": "_pokemonId",
-                        "type": "uint256"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "PokemonCaptureFail",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "_pokemonId",
-                        "type": "uint256"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "PokemonCaptured",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "name": "_owner",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "name": "_approved",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "_tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "Approval",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
                         "indexed": true,
                         "name": "_from",
                         "type": "address"
@@ -235,22 +201,65 @@ App = {
                 "type": "event"
             },
             {
-                "constant": false,
+                "anonymous": false,
                 "inputs": [
                     {
-                        "name": "_to",
-                        "type": "address"
+                        "indexed": false,
+                        "name": "_pokemonId",
+                        "type": "uint256"
                     },
                     {
-                        "name": "_tokenId",
-                        "type": "uint256"
+                        "indexed": true,
+                        "name": "_owner",
+                        "type": "address"
                     }
                 ],
-                "name": "approve",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
+                "name": "PokemonCaptureFail",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "pokemonId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "indexed": false,
+                        "name": "dna",
+                        "type": "uint32"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "_creator",
+                        "type": "address"
+                    }
+                ],
+                "name": "NewPokemon",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "name": "_pokemonId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": true,
+                        "name": "_owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "PokemonCaptured",
+                "type": "event"
             },
             {
                 "constant": false,
@@ -386,23 +395,6 @@ App = {
                 "type": "function"
             },
             {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "name": "previousOwner",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "name": "newOwner",
-                        "type": "address"
-                    }
-                ],
-                "name": "OwnershipTransferred",
-                "type": "event"
-            },
-            {
                 "constant": false,
                 "inputs": [
                     {
@@ -429,20 +421,6 @@ App = {
                     }
                 ],
                 "name": "setLevelUpFee",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "_tokenId",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "takeOwnership",
                 "outputs": [],
                 "payable": false,
                 "stateMutability": "nonpayable",
@@ -487,6 +465,25 @@ App = {
                 "outputs": [],
                 "payable": false,
                 "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_pokemonId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "_isEvovalble",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
                 "type": "function"
             },
             {

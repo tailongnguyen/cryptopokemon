@@ -15,7 +15,7 @@ $(document).ready(function name(params) {
             value: web3.toWei(0, 'ether')
         }, function (error, result) {
             if (!error) {
-                var newPokemonEvent = App.contractInstance.NewPokemon();
+                var newPokemonEvent = App.contractInstance.NewPokemon({_creator: App.myAccount});
 
                 newPokemonEvent.watch(function (error, result) {
                     if (!error) {

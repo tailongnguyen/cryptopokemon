@@ -7,8 +7,8 @@ contract PokemonCapture is PokemonAttack {
     uint captureTime = 1 hours;
     uint public countDownTime;
     
-    event PokemonCaptured(uint _pokemonId, address owner);
-    event PokemonCaptureFail(uint _pokemonId, address owner);
+    event PokemonCaptured(uint _pokemonId, address indexed _owner);
+    event PokemonCaptureFail(uint _pokemonId, address indexed _owner);
     
     function PokemonCapture() public {
         countDownTime = now;
@@ -17,7 +17,7 @@ contract PokemonCapture is PokemonAttack {
     function callWildPokemon() external onlyOwner {
         require(uint(now) > countDownTime);
         for(uint i = 0; i < 4; i++){
-            wildPokemons[i] = WildPokemon(randMod(primitives.length), uint32(randMod(50)), true);    
+            wildPokemons[i] = WildPokemon(randMod(primitives.length), uint32(randMod(20)), true);    
         }
     
         countDownTime = now + captureTime;
@@ -43,12 +43,12 @@ contract PokemonCapture is PokemonAttack {
             pokemons[id].stats.speed += uint32(stats.speed * (pokemon.level - 1));
             pokemons[id].stats.hp += uint32(stats.hp * (pokemon.level - 1));
             
-            PokemonCaptured(id, msg.sender);
+            emit PokemonCaptured(id, msg.sender);
             pokemon.capturable = false;
             _captured = true;
         }
         else {
-            PokemonCaptureFail(_wildPokemonId, msg.sender);
+            emit PokemonCaptureFail(_wildPokemonId, msg.sender);
             _captured = false;
         }
     }

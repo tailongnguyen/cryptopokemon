@@ -127,13 +127,13 @@ contract PokemonAttack is PokemonHelper {
                 }
             }
     
-            PokemonBattle(_pokemonId, _targetId, turns);
+            emit PokemonBattle(_pokemonId, _targetId, turns);
             return (_pokemonId);
         } 
         else {
             // lose :(
             myPokemon.lossCount++;
-            PokemonBattle(_pokemonId, _targetId, turns);
+            emit PokemonBattle(_pokemonId, _targetId, turns);
             _triggerCooldown(myPokemon);
             return (_targetId);
         }

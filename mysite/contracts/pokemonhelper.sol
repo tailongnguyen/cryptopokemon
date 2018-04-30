@@ -5,15 +5,15 @@ import "./pokemonfeeding.sol";
 contract PokemonHelper is PokemonFeeding {
 
     uint levelUpFee = 0.001 ether;
-    event PokemonLevelUp(uint _pokemonId, uint32 _level);
-    event PokemonEvolve(uint _pokemonId);
+    event PokemonLevelUp(uint _pokemonId, address indexed _owner);
+    event PokemonEvolve(uint _pokemonId, address indexed _owner);
     
     modifier aboveLevel(uint _level, uint _pokemonId) {
         require(pokemons[_pokemonId].level >= _level);
         _;
     }
     
-    function _isEvovalble(uint _pokemonId) internal view returns(bool){
+    function _isEvovalble(uint _pokemonId) public view returns(bool){
         Pokemon memory myPokemon = pokemons[_pokemonId];
         uint threshold = evolution[myPokemon.primitiveId];
         if (threshold > 0 && myPokemon.level >= threshold) {
@@ -36,20 +36,20 @@ contract PokemonHelper is PokemonFeeding {
         require(msg.value == levelUpFee);
         Pokemon storage myPokemon = pokemons[_pokemonId];
         _levelUp(_pokemonId);
-        
-        BaseStats memory stats = natures[myPokemon.nature];
-
-        myPokemon.stats.attack += stats.attack;
-        myPokemon.stats.defense += stats.defense;
-        myPokemon.stats.speed += stats.speed;
-        myPokemon.stats.hp += stats.hp;
     }
 
     function _levelUp(uint _pokemonId) internal {
         Pokemon storage myPokemon = pokemons[_pokemonId];
         myPokemon.level++;
         myPokemon.exp = 0;
-        PokemonLevelUp(_pokemonId, myPokemon.level);
+
+        BaseStats memory stats = natures[myPokemon.nature];
+
+        myPokemon.stats.attack += stats.attack;
+        myPokemon.stats.defense += stats.defense;
+        myPokemon.stats.speed += stats.speed;
+        myPokemon.stats.hp += stats.hp;
+        emit PokemonLevelUp(_pokemonId, pokemonToOwner[_pokemonId]);
     }
     
     function evolve(uint _pokemonId) external onlyOwnerOf(_pokemonId) {
@@ -60,7 +60,8 @@ contract PokemonHelper is PokemonFeeding {
         myPokemon.stats.defense += 15;
         myPokemon.stats.speed += 15;
         myPokemon.stats.hp += 15;
-        PokemonEvolve(_pokemonId);
+        myPokemon.name = primitives[myPokemon.primitiveId].name;
+        emit PokemonEvolve(_pokemonId, pokemonToOwner[_pokemonId]);
     }
 
     function changeNickName(uint _pokemonId, string _newNickName) external aboveLevel(2, _pokemonId) onlyOwnerOf(_pokemonId) {

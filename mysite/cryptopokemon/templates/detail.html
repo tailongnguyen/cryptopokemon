@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container" id="{{idx}}" style="margin-top: 10%">
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <h3 >Attack <span class="badge badge-pill badge-success attack-num"></span> </h3>
+                    <div class="progress">
+                        <div class="attack progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="256"></div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <h3 >Defense <span class="badge badge-pill badge-info defense-num"></h3></span> </h3>
+                    <div class="progress">
+                        <div class="defense progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="256"></div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <h3 >Speed <span class="badge badge-pill badge-warning speed-num"></span> </h3>
+                    <div class="progress">
+                        <div class="speed progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="256"></div>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <h3 >Hp <span class="badge badge-pill badge-danger hp-num"></span> </h3>
+                    <div class="progress">
+                        <div class="hp progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="256"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <img class="card-img-top" src = "" alt="Card image cap" style="width: 300px; height: 300px;">
+                <br>
+                
+                <strong><h2 class="name" style="text-align: center"></h2></strong>
+                <hr>
+                <div class="basic-info" style="text-align: center;margin-left: auto; margin-right:auto; display: block">
+                    <span style="font-size: 18px;" class="level badge badge-pill badge-danger"></span> 
+                    <span style="font-size: 18px;"class="dna badge badge-pill badge-primary"></span> 
+                    <span style="font-size: 18px;"class="nature badge badge-pill badge-success"></span> 
+                    <hr>
+                </div>
+                <div style="text-align: center">
+                    <h4 class="evolution"></h4>
+                    <br>
+                    <i class="fas fa-lg fa-arrow-down"></i>
+                    <br>
+                    <img class="sprite" src="https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/ivysaur.png" alt="Ivysaur">
+                    <br>
+                    <span class="sprite-name">Ivysaur</span>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <table class="stats-table" style="margin-top: 10%; padding: 10px">
+                    <tr>
+                        <th>Ready Time</th>
+                        <td class="readytime"></td>
+                    </tr>
+                    <tr>
+                        <th> Level Threshold</th>
+                        <td class="threshold"></td>
+                    </tr>
+                    <tr>
+                        <th> Exp </th>
+                        <td class="exp"></td>
+                    </tr>
+                    <tr>
+                        <th>Win Count</th>
+                        <td class="wincount"></td>
+                    </tr>
+                    <tr>
+                        <th>Loss Count</th>
+                        <td class="losscount"></td>
+                    </tr>
+                    <tr>
+                        <th>Primitive ID</th>
+                        <td class="primitiveID"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content%}
+
+{% block js %}
+<script src="{% static 'js/detail.js' %}"></script>
+{% endblock js %}

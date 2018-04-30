@@ -279,12 +279,12 @@ $(document).ready(function name(params) {
         }, async function (err, res){
             if (!err) {
                 console.log(res);
-                var pokemonBattleEvent = App.contractInstance.PokemonBattle();
+                var pokemonBattleEvent = App.contractInstance.PokemonBattle({_to: App.myAccount});
                 // await App.sleep(1000);
                 pokemonBattleEvent.watch((err, res) => {
-                    if (res.args._id1 != selected[0] || res.args._id2 != enemy_id){
-                        return
-                    }
+                    // if (res.args._id1 != selected[0] || res.args._id2 != enemy_id){
+                    //     return
+                    // }
                     console.log("Battle: " + res.args._id1 + " vs " + res.args._id2);
                     App.contractInstance.getPokemonStats.call(res.args._id1, (err, stats1) => {
                         var sp1 = stats1[2];
