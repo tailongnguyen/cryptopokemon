@@ -101,6 +101,7 @@ $(document).ready(function name(params) {
                         });
                         $(".pokemon_" + results[i]).find(".levelup-btn").attr("id", results[i]);
                         $(".pokemon_" + results[i]).find(".evolve-btn").attr("id", results[i]);
+                        $(".pokemon_" + results[i]).find(".card-link").attr("href", "cryptopokemon/detail/" + results[i])
                     }
                     else {
                         console.log(error);
