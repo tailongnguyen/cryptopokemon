@@ -1,6 +1,4 @@
-# Project Title
-
-Cryptopokemon
+# Cryptopokemon
 ![alt text](https://github.com/tailongnguyen/cryptopokemon/blob/master/screenshot.png)
 ## Getting Started
 
