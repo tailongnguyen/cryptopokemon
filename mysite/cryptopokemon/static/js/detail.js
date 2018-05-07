@@ -41,6 +41,9 @@ $(document).ready(function name(params) {
                     }
                 })
             }
+            else {
+                $(".evo").css("display", 'none')
+            }
         }
     })
 
@@ -61,13 +64,13 @@ $(document).ready(function name(params) {
     App.contractInstance.getPokemonStats.call(idx, function (error, stats) {
         if (!error) {
 
-            $(".attack").css("width", stats[0]+"%");
+            $(".attack").css("width", stats[0]/2.56+"%");
             $(".attack-num").text(stats[0]);
-            $(".defense").css("width", stats[1]+"%");
+            $(".defense").css("width", stats[1]/2.56+"%");
             $(".defense-num").text(stats[1]);
-            $(".speed").css("width", stats[2]+"%");
+            $(".speed").css("width", stats[2]/2.56+"%");
             $(".speed-num").text(stats[2]);
-            $(".hp").css("width", stats[3]+"%")
+            $(".hp").css("width", stats[3]/2.56+"%")
             $(".hp-num").text(stats[3])
         }
         else {

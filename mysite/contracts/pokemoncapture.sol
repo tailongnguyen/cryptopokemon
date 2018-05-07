@@ -24,7 +24,7 @@ contract PokemonCapture is PokemonAttack {
     }
 
     function capturePokemon(uint _wildPokemonId) external returns(bool _captured){
-        uint rand = randMod(463);
+        uint rand = randMod(464);
 
         WildPokemon storage pokemon = wildPokemons[_wildPokemonId];
         require(now < countDownTime);
